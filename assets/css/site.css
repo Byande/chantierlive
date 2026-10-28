@@ -283,3 +283,13 @@ footer .legal{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--hair
   .hero .float{display:none}
   .btn{font-size:.92rem}
 }
+
+/* ---------- Impression ---------- */
+@media print{
+  body::before,.nav,.menu,footer .legal span:last-child{display:none!important}
+  body{background:#fff}
+  .rv{opacity:1!important;transform:none!important;filter:none!important}
+  section,.page-head{padding-block:1.6rem;break-inside:avoid}
+  .bezel,.card,.plan,.sw div,.logos .l{box-shadow:none;break-inside:avoid}
+  a[href]::after{content:''}
+}
