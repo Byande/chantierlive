@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 72" width="420" height="72" role="img" aria-label="ChantierLive">
+  <title>ChantierLive</title>
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&amp;display=swap');
+    .w{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:44px;letter-spacing:-1.6px;font-variation-settings:'opsz' 72}</style></defs>
+  <g transform="translate(4 4)">
+    <path d="M10 26V16a6 6 0 0 1 6-6h10" fill="none" stroke="#0B1D33" stroke-width="5" stroke-linecap="round"/>
+    <path d="M54 38v10a6 6 0 0 1-6 6H38" fill="none" stroke="#0B1D33" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="7.5" fill="#E4572E"/>
+    <circle cx="32" cy="32" r="13.5" fill="none" stroke="#E4572E" stroke-width="2" opacity=".45"/>
+  </g>
+  <text class="w" x="84" y="51" fill="#0B1D33">Chantier<tspan fill="#E4572E">Live</tspan></text>
+</svg>
