@@ -121,13 +121,14 @@ const VUES = [
   ['Terrain', [['chantier', 'Chantier'], ['pointage', 'Pointage et émargement']]],
   ['Ressources', [['rh', 'Ressources humaines'], ['achats', 'Achats et fournisseurs']]],
   ['Après livraison', [['exploitation', 'Exploitation et maintenance']]],
-  ['Dispositif', [['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
+  ['Dispositif', [['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['abonnement', 'Abonnement'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
+  ['Plateforme', [['backoffice', 'Back-office']]],
 ];
 function renderNav() {
   const nAl = alertes().filter(a => a.n === 'crit').length, nNotif = (S.data.notifications || []).filter(x => !(x.lu_par || []).includes(S.user.id)).length;
-  $('#nav').innerHTML = VUES.map(([g, vs]) => '<h5>' + g + '</h5>' + vs.map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('');
+  $('#nav').innerHTML = VUES.filter(([g]) => g !== 'Plateforme' || S.adminPlateforme).map(([g, vs]) => '<h5>' + g + '</h5>' + vs.filter(([id]) => !(id === 'abonnement' && !(PEUT.admin.includes(S.role) || S.adminPlateforme))).map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('');
 }
-function go(id, silencieux) { if (!RENDU[id]) id = 'cockpit'; S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = RENDU[id](); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
+function go(id, silencieux) { if (!RENDU[id]) id = 'cockpit'; if (!silencieux) fermerModal(); S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = RENDU[id](); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
 window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (RENDU[h] && h !== S.vue) go(h); });
 const RENDU = {}, MONTE = {};
 
@@ -171,7 +172,7 @@ const listeAlertes = () => { const a = alertes(); return a.length ? a.map(x => '
 RENDU.cockpit = () => {
   const p = S.prog; if (!p) return entete('Aucun programme', 'Créez un programme dans Paramètres.');
   const pj = pointagesDuJour(), presents = new Set(pj.filter(x => x.type === 'arrivee').map(x => x.agent_nom)).size;
-  return entete('Cockpit du programme', '<b>' + esc(p.nom) + '</b> · semaine ' + p.semaine_courante + ' sur ' + p.semaines_total + ' · ' + dateFr(new Date()) + ' · six paramètres de réussite, calculés sur les données réelles du chantier.') + kpiCards() +
+  return (window.bandeauLectureSeule ? bandeauLectureSeule() : '') + entete('Cockpit du programme', '<b>' + esc(p.nom) + '</b> · semaine ' + p.semaine_courante + ' sur ' + p.semaines_total + ' · ' + dateFr(new Date()) + ' · six paramètres de réussite, calculés sur les données réelles du chantier.') + kpiCards() +
     '<div class="g g2" style="margin-top:1rem;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)"><div class="carte"><h3>Alertes à traiter <small>' + alertes().length + ' alertes</small></h3>' + listeAlertes() + '</div>' +
     '<div><div class="carte"><h3>Aujourd’hui sur le terrain <small>' + dateFr(new Date()).split(' ').slice(0, 3).join(' ') + '</small></h3><div class="ligne"><span>Présents (émargés)</span><b>' + presents + ' / ' + S.data.agents.length + '</b></div><div class="ligne"><span>Émargements</span><b>' + pj.length + '</b></div><div class="ligne"><span>Photos cette semaine</span><b>' + S.data.photos.filter(x => (Date.now() - new Date(x.ts)) < 7 * 864e5).length + '</b></div><div class="ligne"><span>Caméras en ligne</span><b>' + S.data.cameras.filter(c => c.en_ligne).length + ' / ' + S.data.cameras.length + '</b></div><p style="margin-top:.8rem"><button class="btn primaire petit" onclick="go(\'pointage\')">Émarger</button> <button class="btn petit" onclick="go(\'chantier\')">Photos</button></p></div>' +
     '<div class="carte" style="margin-top:1rem"><h3>Phases du programme</h3>' + S.data.phases.map(f => '<div style="margin:.5rem 0"><div style="display:flex;justify-content:space-between;font-size:.9rem"><b>' + esc(f.nom) + '</b><span>' + fmt(f.avancement) + ' %</span></div><div class="barre"><i class="' + (f.avancement >= 100 ? 'ok' : '') + '" style="width:' + f.avancement + '%"></i></div></div>').join('') + '</div></div></div>';
