@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ChantierLive — application</title>
+<meta name="description" content="ChantierLive : suivi et contrôle de chantier en direct. Espace client.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0B1D33">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ChantierLive">
+<link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/brand/mark.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="app" class="app" hidden>
+  <header class="top">
+    <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 26V16a6 6 0 0 1 6-6h10" fill="none" stroke="#F7F3EB" stroke-width="5" stroke-linecap="round"/><path d="M54 38v10a6 6 0 0 1-6 6H38" fill="none" stroke="#F7F3EB" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="32" r="7.5" fill="#E4572E"/><circle cx="32" cy="32" r="13.5" fill="none" stroke="#E4572E" stroke-width="2" opacity=".5"/></svg><div><b>Chantier<span>Live</span></b><small id="sousTitre">—</small></div></div>
+    <div class="droite"><span class="pill" id="conn"><i></i><span>Connexion…</span></span><span id="clock" class="clock"></span><button class="btnIcone" id="btnCompte" title="Mon compte" aria-label="Mon compte"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="7" r="3.5"/><path d="M3.5 17a6.5 6.5 0 0 1 13 0"/></svg></button></div>
+  </header>
+  <nav class="side" id="nav"></nav>
+  <main id="main"></main>
+  <div id="toast" class="toast"></div>
+</div>
+<div id="auth" class="auth" hidden>
+  <div class="carteAuth">
+    <div class="brandAuth"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 26V16a6 6 0 0 1 6-6h10" fill="none" stroke="#0B1D33" stroke-width="5" stroke-linecap="round"/><path d="M54 38v10a6 6 0 0 1-6 6H38" fill="none" stroke="#0B1D33" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="32" r="7.5" fill="#E4572E"/><circle cx="32" cy="32" r="13.5" fill="none" stroke="#E4572E" stroke-width="2" opacity=".45"/></svg><b>Chantier<span>Live</span></b></div>
+    <h1>Connexion</h1>
+    <p class="muted">Votre chantier, en direct. Entrez l'adresse e-mail de votre compte.</p>
+    <form id="formAuth">
+      <label>E-mail<input type="email" name="email" required autocomplete="username" inputmode="email"></label>
+      <label id="lblMdp">Mot de passe<input type="password" name="mdp" autocomplete="current-password"></label>
+      <button class="btn primaire" type="submit" id="btnConnexion">Se connecter</button>
+      <button class="btn lien" type="button" id="btnLienMagique">Recevoir un lien de connexion par e-mail</button>
+      <p class="statut" id="authStatut" role="status" aria-live="polite"></p>
+    </form>
+    <p class="mini">Espace réservé aux clients ChantierLive. <a href="../">Site public</a> · <a href="../legal/confidentialite.html">Confidentialité</a></p>
+  </div>
+</div>
+<div id="modal" class="modal" hidden><div class="modalCarte" id="modalCarte"></div></div>
+<input type="file" id="fileCam" accept="image/*" capture="environment" hidden>
+<input type="file" id="fileGal" accept="image/*" hidden>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
