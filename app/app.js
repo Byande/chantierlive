@@ -18,7 +18,7 @@ const PEUT = { // droits côté interface (la base fait foi)
 };
 const sb = supabase.createClient(CFG.url, CFG.key, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }, realtime: { params: { eventsPerSecond: 5 } } });
 
-const S = { user: null, orgs: [], org: null, role: null, programmes: [], prog: null, vue: localStorage.getItem('cl_vue') || 'cockpit', data: {}, canal: null, gps: null, sigVide: true, typePointage: 'arrivee', fileAttente: JSON.parse(localStorage.getItem('cl_file') || '[]') };
+const S = { adminPlateforme: false, cache: {}, user: null, orgs: [], org: null, role: null, programmes: [], prog: null, vue: localStorage.getItem('cl_vue') || 'cockpit', data: {}, canal: null, gps: null, sigVide: true, typePointage: 'arrivee', fileAttente: JSON.parse(localStorage.getItem('cl_file') || '[]') };
 
 /* ---------- utilitaires UI ---------- */
 let toastT; function toast(html, ms = 3200) { const t = $('#toast'); t.innerHTML = html; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), ms); }
@@ -51,9 +51,10 @@ function afficherAuth() { $('#app').hidden = true; $('#auth').hidden = false; if
 /* ---------- démarrage : organisations, rôle, programme ---------- */
 async function demarrer() {
   $('#auth').hidden = true; $('#app').hidden = false; setConn('off', 'Chargement…');
-  const { data: membres, error } = await sb.from('membres').select('org_id, role, orgs(id, slug, nom, pays, devise, taux_eur, plan, statut)').eq('actif', true).eq('user_id', S.user.id);
+  const { data: membres, error } = await sb.from('membres').select('org_id, role, orgs(id, slug, nom, pays, devise, taux_eur, plan, statut, parametres)').eq('actif', true).eq('user_id', S.user.id);
   if (error) { toast('<b>Erreur</b> ' + esc(error.message)); return; }
   S.orgs = (membres || []).map(m => ({ ...m.orgs, role: m.role }));
+  const { data: pa } = await sb.from('platform_admins').select('email').limit(1); S.adminPlateforme = !!(pa && pa.length);
   if (!S.orgs.length) { $('#main').innerHTML = '<div class="vide"><h2>Aucune organisation</h2><p style="margin-top:.5rem">Votre compte n’est rattaché à aucun client ChantierLive. Demandez une invitation à votre administrateur ou écrivez à contact@chantierlive.com.</p><p style="margin-top:1rem"><button class="btn" onclick="deconnexion()">Se déconnecter</button></p></div>'; $('#nav').innerHTML = ''; setConn('off', 'Sans organisation'); return; }
   const prefere = localStorage.getItem('cl_org'); S.org = S.orgs.find(o => o.id === prefere) || S.orgs[0]; S.role = S.org.role;
   await chargerProgrammes();
@@ -63,12 +64,12 @@ async function chargerProgrammes() {
   const { data } = await sb.from('programmes').select('*').eq('org_id', S.org.id).order('cree_le'); S.programmes = data || [];
   const pp = localStorage.getItem('cl_prog'); S.prog = S.programmes.find(p => p.id === pp) || S.programmes[0] || null;
   $('#sousTitre').textContent = S.org.nom + (S.prog ? ' · ' + S.prog.nom : '') + ' · ' + ROLES[S.role];
-  await chargerDonnees(); brancherTempsReel(); renderNav(); go(S.vue);
+  await chargerDonnees(); brancherTempsReel(); renderNav(); const h = location.hash.slice(1); go(RENDU[h] ? h : S.vue);
 }
 async function chargerDonnees() {
   if (!S.prog) { S.data = {}; return; }
   const pid = S.prog.id, t0 = new Date(); t0.setDate(t0.getDate() - 7);
-  const [phases, quartiers, ilots, equipes, agents, pointages, photos, cameras, journal, commandes, stocks, budget, risques, nc, conges] = await Promise.all([
+  const [phases, quartiers, ilots, equipes, agents, pointages, photos, cameras, journal, commandes, stocks, budget, risques, nc, conges, fournisseurs, tickets, ventes, paie, notifications] = await Promise.all([
     sb.from('phases').select('*').eq('programme_id', pid).order('ordre'),
     sb.from('quartiers').select('*').eq('programme_id', pid).order('code'),
     sb.from('ilots').select('*').eq('programme_id', pid).order('code'),
@@ -84,8 +85,13 @@ async function chargerDonnees() {
     sb.from('risques').select('*').eq('programme_id', pid).order('code'),
     sb.from('non_conformites').select('*').eq('programme_id', pid).order('code'),
     sb.from('conges').select('*, agents(nom)').eq('programme_id', pid).order('debut'),
+    sb.from('fournisseurs').select('*').eq('org_id', S.org.id).order('nom'),
+    sb.from('tickets').select('*').eq('programme_id', pid).order('cree_le', { ascending: false }),
+    sb.from('ventes').select('*').eq('programme_id', pid).order('date_reservation', { ascending: false }),
+    sb.from('paie').select('*, agents(nom)').eq('programme_id', pid).order('mois', { ascending: false }).limit(200),
+    sb.from('notifications').select('*').eq('org_id', S.org.id).order('cree_le', { ascending: false }).limit(100),
   ]);
-  S.data = { phases: phases.data || [], quartiers: quartiers.data || [], ilots: ilots.data || [], equipes: equipes.data || [], agents: agents.data || [], pointages: pointages.data || [], photos: photos.data || [], cameras: cameras.data || [], journal: journal.data || [], commandes: commandes.data || [], stocks: stocks.data || [], budget: budget.data || [], risques: risques.data || [], nc: nc.data || [], conges: conges.data || [] };
+  S.data = { phases: phases.data || [], quartiers: quartiers.data || [], ilots: ilots.data || [], equipes: equipes.data || [], agents: agents.data || [], pointages: pointages.data || [], photos: photos.data || [], cameras: cameras.data || [], journal: journal.data || [], commandes: commandes.data || [], stocks: stocks.data || [], budget: budget.data || [], risques: risques.data || [], nc: nc.data || [], conges: conges.data || [], fournisseurs: fournisseurs.data || [], tickets: tickets.data || [], ventes: ventes.data || [], paie: paie.data || [], notifications: notifications.data || [] };
   const err = [phases, quartiers, ilots, agents, pointages, photos].find(r => r.error); if (err) toast('<b>Lecture partielle</b> ' + esc(err.error.message));
 }
 function brancherTempsReel() {
@@ -95,14 +101,16 @@ function brancherTempsReel() {
     .on('postgres_changes', { event: '*', schema: 'public', table: 'pointages', filter: 'programme_id=eq.' + S.prog?.id }, async p => { await rafraichir('pointages'); if (p.eventType === 'INSERT' && p.new.saisi_par !== S.user.id) toast('<b>Émargement reçu</b> ' + esc(p.new.agent_nom) + ' · ' + hhmm(p.new.ts)); })
     .on('postgres_changes', { event: '*', schema: 'public', table: 'photos', filter: 'programme_id=eq.' + S.prog?.id }, async p => { await rafraichir('photos'); if (p.eventType === 'INSERT' && p.new.saisi_par !== S.user.id) toast('<b>Nouvelle photo</b> ' + esc(p.new.legende || p.new.zone || '')); })
     .on('postgres_changes', { event: '*', schema: 'public', table: 'journal', filter: 'programme_id=eq.' + S.prog?.id }, () => rafraichir('journal'))
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications', filter: 'org_id=eq.' + S.org.id }, async p => { await rafraichir('notifications'); toast('<b>Alerte</b> ' + esc(p.new.titre), 5000); renderNav(); })
     .subscribe(st => { if (st === 'SUBSCRIBED') setConn('on', 'Temps réel · en direct'); else if (st === 'CHANNEL_ERROR' || st === 'TIMED_OUT') setConn('off', 'Temps réel indisponible'); });
 }
 async function rafraichir(table) {
   const pid = S.prog.id;
   if (table === 'pointages') { const t0 = new Date(); t0.setDate(t0.getDate() - 7); const { data } = await sb.from('pointages').select('*').eq('programme_id', pid).gte('ts', t0.toISOString()).order('ts', { ascending: false }).limit(400); S.data.pointages = data || []; }
   if (table === 'photos') { const { data } = await sb.from('photos').select('*').eq('programme_id', pid).order('ts', { ascending: false }).limit(60); S.data.photos = data || []; }
+  if (table === 'notifications') { const { data } = await sb.from('notifications').select('*').eq('org_id', S.org.id).order('cree_le', { ascending: false }).limit(100); S.data.notifications = data || []; }
   if (table === 'journal') { const { data } = await sb.from('journal').select('*').eq('programme_id', pid).order('ts', { ascending: false }).limit(30); S.data.journal = data || []; }
-  if (!document.activeElement || !document.activeElement.matches('input,select,textarea')) { if (['cockpit', 'pointage', 'chantier'].includes(S.vue)) go(S.vue, true); }
+  if (!document.activeElement || !document.activeElement.matches('input,select,textarea')) { if (['cockpit', 'pointage', 'chantier', 'alertes'].includes(S.vue)) go(S.vue, true); }
 }
 window.addEventListener('online', () => { setConn('on', 'Temps réel · synchronisé'); viderFileAttente(); });
 window.addEventListener('offline', () => setConn('off', 'Hors ligne · saisies conservées'));
@@ -112,11 +120,12 @@ const VUES = [
   ['Piloter', [['cockpit', 'Cockpit'], ['site', 'Site et quartiers'], ['finances', 'Finances'], ['risques', 'Risques et qualité']]],
   ['Terrain', [['chantier', 'Chantier'], ['pointage', 'Pointage et émargement']]],
   ['Ressources', [['rh', 'Ressources humaines'], ['achats', 'Achats et fournisseurs']]],
-  ['Dispositif', [['equipe', 'Comptes et accès'], ['parametres', 'Paramètres']]],
+  ['Après livraison', [['exploitation', 'Exploitation et maintenance']]],
+  ['Dispositif', [['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
 ];
 function renderNav() {
-  const nAl = alertes().filter(a => a.n === 'crit').length;
-  $('#nav').innerHTML = VUES.map(([g, vs]) => '<h5>' + g + '</h5>' + vs.map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + '</a>').join('')).join('');
+  const nAl = alertes().filter(a => a.n === 'crit').length, nNotif = (S.data.notifications || []).filter(x => !(x.lu_par || []).includes(S.user.id)).length;
+  $('#nav').innerHTML = VUES.map(([g, vs]) => '<h5>' + g + '</h5>' + vs.map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('');
 }
 function go(id, silencieux) { if (!RENDU[id]) id = 'cockpit'; S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = RENDU[id](); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
 window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (RENDU[h] && h !== S.vue) go(h); });
@@ -183,8 +192,8 @@ RENDU.chantier = () => { const peutPhoto = PEUT.photo.includes(S.role);
   return entete('Chantier en direct', 'Photos géolocalisées des équipes, caméras et journal du jour. <b>Prenez une photo depuis votre téléphone</b> : elle apparaît sur tous les écrans du programme.') +
     '<div class="g g2" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)"><div><div class="carte"><h3>Journal photo <small>' + S.data.photos.length + ' photos</small></h3>' + (peutPhoto ? '<div class="g g3" style="gap:.6rem"><label class="champ">Zone<select id="phZone"><option>Vue générale</option>' + S.data.ilots.map(i => '<option>Îlot ' + esc(i.code) + '</option>').join('') + '<option>Voirie</option><option>Base vie</option><option>Centrale béton</option></select></label><label class="champ">Légende<input id="phLeg" placeholder="Ex. : coulage semelles A6"></label><label class="champ">Auteur<select id="phAuteur">' + S.data.agents.map(a => '<option value="' + a.id + '">' + esc(a.nom) + ' — ' + esc(a.fonction || '') + '</option>').join('') + '</select></label></div><p style="margin-bottom:1rem"><button class="btn primaire" id="btnCam">📷 Prendre une photo</button> <button class="btn" id="btnGal">Importer</button></p>' : '') +
     (S.data.photos.length ? '<div class="photos" id="photos">' + S.data.photos.map(p => '<figure data-path="' + esc(p.path) + '"><img alt="" loading="lazy"><figcaption><b>' + esc(p.legende || p.zone || '') + '</b>' + esc(p.zone || '') + ' · ' + esc(p.auteur_nom || '') + ' · ' + new Date(p.ts).toLocaleDateString('fr-FR') + ' ' + hhmm(p.ts) + (p.lat ? ' · GPS' : '') + '</figcaption></figure>').join('') + '</div>' : '<div class="vide">Aucune photo pour l’instant. Prenez la première depuis votre téléphone.</div>') + '</div></div>' +
-    '<div><div class="carte"><h3>Caméras <small>' + S.data.cameras.filter(c => c.en_ligne).length + ' / ' + S.data.cameras.length + ' en ligne</small></h3>' + S.data.cameras.map(c => '<div class="ligne"><span><b>' + esc(c.code) + '</b> ' + esc(c.nom) + '<br><small class="muted">' + esc(c.dernier_evenement || '') + '</small></span><span class="etat ' + (c.en_ligne ? 'ok' : 'crit') + '">' + (c.en_ligne ? 'En ligne' : 'Hors ligne') + '</span></div>').join('') + '</div>' +
-    '<div class="carte" style="margin-top:1rem"><h3>Journal du jour</h3>' + (S.data.journal.length ? S.data.journal.map(j => '<div class="ligne"><span><b>' + hhmm(j.ts) + '</b> ' + esc(j.titre) + '</span><span class="tag">' + esc(j.statut || '') + '</span></div>').join('') : '<div class="vide">Journal vide.</div>') + '</div></div></div>'; };
+    '<div><div class="carte"><h3>Caméras <small>' + S.data.cameras.filter(c => c.en_ligne).length + ' / ' + S.data.cameras.length + ' en ligne ' + boutonAjout('camera') + '</small></h3>' + S.data.cameras.map(c => '<div class="ligne"><span><b>' + esc(c.code) + '</b> ' + esc(c.nom) + '<br><small class="muted">' + esc(c.dernier_evenement || '') + '</small></span><span style="display:flex;gap:.4rem;align-items:center"><span class="etat ' + (c.en_ligne ? 'ok' : 'crit') + '">' + (c.en_ligne ? 'En ligne' : 'Hors ligne') + '</span>' + boutonEdit('camera', c.id) + '</span></div>').join('') + '</div>' +
+    '<div class="carte" style="margin-top:1rem"><h3>Journal du jour <small>' + boutonAjout('journal', 'Événement') + '</small></h3>' + (S.data.journal.length ? S.data.journal.map(j => '<div class="ligne"><span><b>' + hhmm(j.ts) + '</b> ' + esc(j.titre) + '</span><span class="tag">' + esc(j.statut || '') + '</span></div>').join('') : '<div class="vide">Journal vide.</div>') + '</div></div></div>'; };
 MONTE.chantier = async () => {
   $('#btnCam')?.addEventListener('click', () => $('#fileCam').click()); $('#btnGal')?.addEventListener('click', () => $('#fileGal').click());
   const figs = $$('#photos figure'); if (!figs.length) return;
