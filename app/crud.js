@@ -85,6 +85,7 @@ async function enregistrerEntite(e, id) {
   const { error } = await q;
   if (error) { st.className = 'statut err'; st.textContent = /duplicate/i.test(error.message) ? 'Ce code ou numéro existe déjà.' : /row-level security/i.test(error.message) ? 'Votre rôle ne permet pas cette action.' : error.message; return; }
   fermerModal(); toast('<b>' + E.nom + '</b> ' + (id ? 'modifié(e)' : 'enregistré(e)') + '.');
+  if (E.table === 'programmes') { if (!id) localStorage.removeItem('cl_prog'); await chargerProgrammes(); if (!id) go('cockpit'); return; }
   await chargerDonnees(); go(S.vue, true);
 }
 async function supprimerEntite(e, id) {

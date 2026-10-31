@@ -1,5 +1,5 @@
 /* ============================================================
-   ChantierLive — application client · v0.6 (étapes 3 à 6 : socle multi-clients, saisie, paiement, licences et marque blanche)
+   ChantierLive — application client · v0.7 (étapes 3 à 7 : socle multi-clients, saisie, paiement, licences et marque blanche, essai libre-service)
    Authentification, organisations, rôles, cockpit sur données réelles,
    pointage signé et géolocalisé, photos, temps réel.
    ============================================================ */
@@ -40,6 +40,11 @@ formAuth.addEventListener('submit', async e => {
   if (error) { authStatut.className = 'statut err'; authStatut.textContent = error.message.includes('Invalid') ? 'E-mail ou mot de passe incorrect.' : error.message; }
   else authStatut.textContent = '';
 });
+$('#btnMdpOublie').addEventListener('click', async () => {
+  const email = new FormData(formAuth).get('email').trim(); if (!email) { authStatut.className = 'statut err'; authStatut.textContent = "Entrez d'abord votre adresse e-mail."; return; }
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.href.split('#')[0] });
+  authStatut.className = error ? 'statut err' : 'statut ok'; authStatut.textContent = error ? error.message : 'E-mail envoyé. Ouvrez le lien : vous choisirez un nouveau mot de passe.';
+});
 $('#btnLienMagique').addEventListener('click', async () => {
   const email = new FormData(formAuth).get('email').trim(); if (!email) { authStatut.className = 'statut err'; authStatut.textContent = "Entrez d'abord votre adresse e-mail."; return; }
   const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.href.split('#')[0], shouldCreateUser: false } });
@@ -48,7 +53,7 @@ $('#btnLienMagique').addEventListener('click', async () => {
 async function initialiser() {
   const m = await window.MARQUE_PRETE; if (m?.instance?.url && m.instance.key) { CFG.url = m.instance.url; CFG.key = m.instance.key; }
   sb = supabase.createClient(CFG.url, CFG.key, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }, realtime: { params: { eventsPerSecond: 5 } } });
-  sb.auth.onAuthStateChange((evt, session) => { if (session?.user && (!S.user || S.user.id !== session.user.id)) { S.user = session.user; demarrer(); } else if (!session) { S.user = null; afficherAuth(); } });
+  sb.auth.onAuthStateChange((evt, session) => { if (evt === 'PASSWORD_RECOVERY') S.recupMdp = true; if (session?.user && (!S.user || S.user.id !== session.user.id)) { S.user = session.user; demarrer(); } else if (!session) { S.user = null; afficherAuth(); } });
   const { data } = await sb.auth.getSession(); if (!data.session) afficherAuth();
 }
 initialiser();
@@ -65,10 +70,11 @@ async function demarrer() {
   const prefere = localStorage.getItem('cl_org'); S.org = S.orgs.find(o => o.id === prefere) || S.orgs[0]; S.role = S.org.role;
   await chargerMarqueOrg();
   await chargerProgrammes();
-  if (S.user.user_metadata?.doit_changer_mdp) changerMdp(true);
+  if (S.user.user_metadata?.doit_changer_mdp || S.recupMdp) { S.recupMdp = false; changerMdp(true); }
 }
 async function chargerMarqueOrg() {
-  const [{ data: lic }, { data: mq }] = await Promise.all([sb.from('licences').select('*').eq('org_id', S.org.id).order('fin', { ascending: false }), sb.from('marques').select('*').eq('org_id', S.org.id).maybeSingle()]);
+  const [{ data: lic }, { data: mq }, { data: ess }, { data: lim }] = await Promise.all([sb.from('licences').select('*').eq('org_id', S.org.id).order('fin', { ascending: false }), sb.from('marques').select('*').eq('org_id', S.org.id).maybeSingle(), sb.from('abonnements').select('echeance').eq('org_id', S.org.id).eq('statut', 'essai').order('echeance', { ascending: false }).limit(1).maybeSingle(), sb.rpc('limites', { p_org: S.org.id })]);
+  S.essai = ess ? { echeance: ess.echeance, jours: Math.round((new Date(ess.echeance) - new Date(new Date().toISOString().slice(0, 10))) / 864e5) } : null; S.limites = lim || null; S.cache.nbMembres = null;
   S.licences = lic || []; S.licence = S.licences.find(l => l.statut === 'active' && l.fin >= new Date().toISOString().slice(0, 10)) || null; S.marque = mq || null;
   if (!(S.licence && S.marque && S.marque.actif)) { if (MARQUE.slug !== 'chantierlive' && !MARQUE.instance) { localStorage.removeItem('cl_marque'); localStorage.removeItem('cl_marque_cle'); appliquerMarque(MARQUE_DEFAUT); } }
   else appliquerMarqueOrg({ slug: S.marque.slug, nom: S.marque.nom, slogan: S.marque.slogan, logo_url: S.marque.logo_url, logo_sombre_url: S.marque.logo_sombre_url, favicon_url: S.marque.favicon_url, encre: S.marque.couleur_encre, signal: S.marque.couleur_signal, craie: S.marque.couleur_craie, masquer: S.marque.masquer_chantierlive, pied: S.marque.pied_de_page, instance: S.marque.instance, licence: { type: S.licence.type, fin: S.licence.fin } });
@@ -134,14 +140,14 @@ const VUES = [
   ['Terrain', [['chantier', 'Chantier'], ['pointage', 'Pointage et émargement']]],
   ['Ressources', [['rh', 'Ressources humaines'], ['achats', 'Achats et fournisseurs']]],
   ['Après livraison', [['exploitation', 'Exploitation et maintenance']]],
-  ['Dispositif', [['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['abonnement', 'Abonnement'], ['marque', 'Marque et licence'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
+  ['Dispositif', [['bienvenue', 'Démarrer'], ['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['abonnement', 'Abonnement'], ['marque', 'Marque et licence'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
   ['Plateforme', [['backoffice', 'Back-office']]],
 ];
 function renderNav() {
   const nAl = alertes().filter(a => a.n === 'crit').length, nNotif = (S.data.notifications || []).filter(x => !(x.lu_par || []).includes(S.user.id)).length;
-  $('#nav').innerHTML = VUES.filter(([g]) => g !== 'Plateforme' || S.adminPlateforme).map(([g, vs]) => '<h5>' + g + '</h5>' + vs.filter(([id]) => !(['abonnement', 'marque'].includes(id) && !(PEUT.admin.includes(S.role) || S.adminPlateforme))).map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('') + (MARQUE.slug !== 'chantierlive' && !MARQUE.masquer ? '<p class="propulse side">Propulsé par <a href="https://chantierlive.com" target="_blank" rel="noopener">Chantier<b>Live</b></a></p>' : '');
+  $('#nav').innerHTML = VUES.filter(([g]) => g !== 'Plateforme' || S.adminPlateforme).map(([g, vs]) => '<h5>' + g + '</h5>' + vs.filter(([id]) => !(['abonnement', 'marque'].includes(id) && !(PEUT.admin.includes(S.role) || S.adminPlateforme)) && !(id === 'bienvenue' && !(S.essai || !S.prog))).map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('') + (MARQUE.slug !== 'chantierlive' && !MARQUE.masquer ? '<p class="propulse side">Propulsé par <a href="https://chantierlive.com" target="_blank" rel="noopener">Chantier<b>Live</b></a></p>' : '');
 }
-function go(id, silencieux) { if (!RENDU[id]) id = 'cockpit'; if (!silencieux) fermerModal(); S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = RENDU[id](); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
+function go(id, silencieux) { if (!RENDU[id]) id = 'cockpit'; if (id === 'cockpit' && !S.prog && RENDU.bienvenue) id = 'bienvenue'; if (!silencieux) fermerModal(); if (window.finVisite) finVisite(); S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = (window.bandeauEssai ? bandeauEssai(id) : '') + RENDU[id](); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
 window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (RENDU[h] && h !== S.vue) go(h); });
 const RENDU = {}, MONTE = {};
 
