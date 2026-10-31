@@ -1,0 +1,1 @@
+{"_doc": "Domaines personnalisés publiés en miroir (voir backend/scripts/publier_domaine_marque.sh et .github/workflows/marques.yml). Un objet par domaine : slug (identifiant de marque), domaine, depot GitHub.", "domaines": []}

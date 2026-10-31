@@ -6,7 +6,7 @@
   const T = {
     fr: { home: 'index.html', links: [['produit', 'produit.html', 'Produit'], ['tarifs', 'tarifs.html', 'Tarifs'], ['demo', 'demo.html', 'Démo'], ['apropos', 'a-propos.html', 'À propos']],
       lang: ['EN', 'en/index.html'], cta: 'Demander une démo', ctaHref: 'demo.html',
-      cols: [['Produit', [['Modules', 'produit.html'], ['Tarifs', 'tarifs.html'], ['Bac à sable', 'https://demo.chantierlive.com/'], ['Documentation', 'docs/index.html']]],
+      cols: [['Produit', [['Modules', 'produit.html'], ['Tarifs', 'tarifs.html'], ['Licence et marque blanche', 'licence.html'], ['Bac à sable', 'https://demo.chantierlive.com/'], ['Documentation', 'docs/index.html']]],
         ['Entreprise', [['À propos', 'a-propos.html'], ['Demander une démo', 'demo.html'], ['Contact', 'mailto:contact@chantierlive.com'], ['Charte de marque', 'marque/index.html']]],
         ['Juridique', [['Mentions légales', 'legal/mentions-legales.html'], ['Conditions d’utilisation', 'legal/cgu.html'], ['Conditions de vente', 'legal/cgv.html'], ['Confidentialité', 'legal/confidentialite.html']]]],
       about: 'Le suivi et le contrôle des chantiers en direct, conçu pour les promoteurs et maîtres d’ouvrage d’Afrique et d’Europe.',
@@ -14,7 +14,7 @@
       menuSmall: 'contact@chantierlive.com' },
     en: { home: 'index.html', links: [['produit', 'index.html#product', 'Product'], ['tarifs', 'index.html#pricing', 'Pricing'], ['demo', 'index.html#demo', 'Demo'], ['apropos', '../a-propos.html', 'About']],
       lang: ['FR', '../index.html'], cta: 'Request a demo', ctaHref: 'index.html#demo',
-      cols: [['Product', [['Modules', 'index.html#product'], ['Pricing', 'index.html#pricing'], ['Sandbox', 'https://demo.chantierlive.com/'], ['Documentation', '../docs/index.html']]],
+      cols: [['Product', [['Modules', 'index.html#product'], ['Pricing', 'index.html#pricing'], ['Dedicated licence (FR)', '../licence.html'], ['Sandbox', 'https://demo.chantierlive.com/'], ['Documentation', '../docs/index.html']]],
         ['Company', [['About (FR)', '../a-propos.html'], ['Request a demo', 'index.html#demo'], ['Contact', 'mailto:contact@chantierlive.com'], ['Brand guidelines (FR)', '../marque/index.html']]],
         ['Legal (FR)', [['Legal notice', '../legal/mentions-legales.html'], ['Terms of use', '../legal/cgu.html'], ['Terms of sale', '../legal/cgv.html'], ['Privacy', '../legal/confidentialite.html']]]],
       about: 'Real-time site monitoring and control, built for developers and project owners in Africa and Europe.',

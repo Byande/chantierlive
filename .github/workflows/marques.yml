@@ -1,0 +1,28 @@
+# ChantierLive · republie l'application sur les dépôts miroirs des domaines personnalisés (marque blanche)
+# à chaque mise à jour de l'application. Secret requis : MARQUES_TOKEN (jeton GitHub avec droit « contents: write » sur les dépôts miroirs).
+name: marques
+on:
+  push:
+    branches: [main]
+    paths: ['app/**', 'assets/brand/**', 'assets/css/**', 'assets/js/**', 'legal/confidentialite.html']
+  workflow_dispatch:
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publier chaque domaine
+        env: { GH_TOKEN: '${{ secrets.MARQUES_TOKEN }}' }
+        run: |
+          set -e
+          n=$(jq '.domaines | length' app/marques.json)
+          [ "$n" = "0" ] && { echo "aucun domaine personnalisé"; exit 0; }
+          for i in $(seq 0 $((n-1))); do
+            slug=$(jq -r ".domaines[$i].slug" app/marques.json); dom=$(jq -r ".domaines[$i].domaine" app/marques.json); depot=$(jq -r ".domaines[$i].depot" app/marques.json)
+            tmp=$(mktemp -d); mkdir -p "$tmp/app" "$tmp/assets" "$tmp/legal"
+            cp -R app/. "$tmp/app/"; cp -R assets/brand assets/css assets/js "$tmp/assets/"; cp legal/confidentialite.html "$tmp/legal/"
+            echo "$dom" > "$tmp/CNAME"; touch "$tmp/.nojekyll"
+            printf '<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/app/?marque=%s"></head><body><a href="/app/?marque=%s">Ouvrir</a></body></html>' "$slug" "$slug" > "$tmp/index.html"; cp "$tmp/index.html" "$tmp/404.html"
+            (cd "$tmp" && git init -q -b main && git add -A && git -c user.name=ChantierLive -c user.email=contact@chantierlive.com commit -q -m "Application · $slug · $dom · ${GITHUB_SHA::7}" && git push -q --force "https://x-access-token:${GH_TOKEN}@github.com/$depot.git" main)
+            echo "publié $dom ($depot)"
+          done

@@ -1,9 +1,9 @@
 /* ============================================================
-   ChantierLive — application client · v0.3 (étape 3 : socle multi-clients)
+   ChantierLive — application client · v0.6 (étapes 3 à 6 : socle multi-clients, saisie, paiement, licences et marque blanche)
    Authentification, organisations, rôles, cockpit sur données réelles,
    pointage signé et géolocalisé, photos, temps réel.
    ============================================================ */
-const CFG = { url: 'https://vdzzvnuarmprkickeyus.supabase.co', key: 'sb_publishable_Mq8zAuTA--p4R7LoOix07A_B6jcRQWK' };
+const CFG = { ...CENTRAL }; // projet central ; remplacé par l'instance dédiée de la marque le cas échéant
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const hhmm = d => new Date(d).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
@@ -16,7 +16,7 @@ const PEUT = { // droits côté interface (la base fait foi)
   photo: ['promoteur', 'direction', 'chef_chantier', 'chef_equipe', 'architecte', 'controle'],
   admin: ['promoteur', 'direction'],
 };
-const sb = supabase.createClient(CFG.url, CFG.key, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }, realtime: { params: { eventsPerSecond: 5 } } });
+let sb; // créé par initialiser() une fois la marque résolue (une licence « instance dédiée » peut pointer vers un autre projet Supabase)
 
 const S = { adminPlateforme: false, cache: {}, user: null, orgs: [], org: null, role: null, programmes: [], prog: null, vue: localStorage.getItem('cl_vue') || 'cockpit', data: {}, canal: null, gps: null, sigVide: true, typePointage: 'arrivee', fileAttente: JSON.parse(localStorage.getItem('cl_file') || '[]') };
 
@@ -45,7 +45,13 @@ $('#btnLienMagique').addEventListener('click', async () => {
   const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.href.split('#')[0], shouldCreateUser: false } });
   authStatut.className = error ? 'statut err' : 'statut ok'; authStatut.textContent = error ? error.message : 'Lien envoyé. Ouvrez l’e-mail sur cet appareil et cliquez sur le lien.';
 });
-sb.auth.onAuthStateChange((evt, session) => { if (session?.user && (!S.user || S.user.id !== session.user.id)) { S.user = session.user; demarrer(); } else if (!session) { S.user = null; afficherAuth(); } });
+async function initialiser() {
+  const m = await window.MARQUE_PRETE; if (m?.instance?.url && m.instance.key) { CFG.url = m.instance.url; CFG.key = m.instance.key; }
+  sb = supabase.createClient(CFG.url, CFG.key, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }, realtime: { params: { eventsPerSecond: 5 } } });
+  sb.auth.onAuthStateChange((evt, session) => { if (session?.user && (!S.user || S.user.id !== session.user.id)) { S.user = session.user; demarrer(); } else if (!session) { S.user = null; afficherAuth(); } });
+  const { data } = await sb.auth.getSession(); if (!data.session) afficherAuth();
+}
+initialiser();
 function afficherAuth() { $('#app').hidden = true; $('#auth').hidden = false; if (S.canal) { sb.removeChannel(S.canal); S.canal = null; } }
 
 /* ---------- démarrage : organisations, rôle, programme ---------- */
@@ -57,8 +63,15 @@ async function demarrer() {
   const { data: pa } = await sb.from('platform_admins').select('email').limit(1); S.adminPlateforme = !!(pa && pa.length);
   if (!S.orgs.length) { $('#main').innerHTML = '<div class="vide"><h2>Aucune organisation</h2><p style="margin-top:.5rem">Votre compte n’est rattaché à aucun client ChantierLive. Demandez une invitation à votre administrateur ou écrivez à contact@chantierlive.com.</p><p style="margin-top:1rem"><button class="btn" onclick="deconnexion()">Se déconnecter</button></p></div>'; $('#nav').innerHTML = ''; setConn('off', 'Sans organisation'); return; }
   const prefere = localStorage.getItem('cl_org'); S.org = S.orgs.find(o => o.id === prefere) || S.orgs[0]; S.role = S.org.role;
+  await chargerMarqueOrg();
   await chargerProgrammes();
   if (S.user.user_metadata?.doit_changer_mdp) changerMdp(true);
+}
+async function chargerMarqueOrg() {
+  const [{ data: lic }, { data: mq }] = await Promise.all([sb.from('licences').select('*').eq('org_id', S.org.id).order('fin', { ascending: false }), sb.from('marques').select('*').eq('org_id', S.org.id).maybeSingle()]);
+  S.licences = lic || []; S.licence = S.licences.find(l => l.statut === 'active' && l.fin >= new Date().toISOString().slice(0, 10)) || null; S.marque = mq || null;
+  if (!(S.licence && S.marque && S.marque.actif)) { if (MARQUE.slug !== 'chantierlive' && !MARQUE.instance) { localStorage.removeItem('cl_marque'); localStorage.removeItem('cl_marque_cle'); appliquerMarque(MARQUE_DEFAUT); } }
+  else appliquerMarqueOrg({ slug: S.marque.slug, nom: S.marque.nom, slogan: S.marque.slogan, logo_url: S.marque.logo_url, logo_sombre_url: S.marque.logo_sombre_url, favicon_url: S.marque.favicon_url, encre: S.marque.couleur_encre, signal: S.marque.couleur_signal, craie: S.marque.couleur_craie, masquer: S.marque.masquer_chantierlive, pied: S.marque.pied_de_page, instance: S.marque.instance, licence: { type: S.licence.type, fin: S.licence.fin } });
 }
 async function chargerProgrammes() {
   const { data } = await sb.from('programmes').select('*').eq('org_id', S.org.id).order('cree_le'); S.programmes = data || [];
@@ -67,7 +80,7 @@ async function chargerProgrammes() {
   await chargerDonnees(); brancherTempsReel(); renderNav(); const h = location.hash.slice(1); go(RENDU[h] ? h : S.vue);
 }
 async function chargerDonnees() {
-  if (!S.prog) { S.data = {}; return; }
+  if (!S.prog) { S.data = { phases: [], quartiers: [], ilots: [], equipes: [], agents: [], pointages: [], photos: [], cameras: [], journal: [], commandes: [], stocks: [], budget: [], risques: [], nc: [], conges: [], fournisseurs: [], tickets: [], ventes: [], paie: [], notifications: (await sb.from('notifications').select('*').eq('org_id', S.org.id).order('cree_le', { ascending: false }).limit(100)).data || [] }; return; }
   const pid = S.prog.id, t0 = new Date(); t0.setDate(t0.getDate() - 7);
   const [phases, quartiers, ilots, equipes, agents, pointages, photos, cameras, journal, commandes, stocks, budget, risques, nc, conges, fournisseurs, tickets, ventes, paie, notifications] = await Promise.all([
     sb.from('phases').select('*').eq('programme_id', pid).order('ordre'),
@@ -121,12 +134,12 @@ const VUES = [
   ['Terrain', [['chantier', 'Chantier'], ['pointage', 'Pointage et émargement']]],
   ['Ressources', [['rh', 'Ressources humaines'], ['achats', 'Achats et fournisseurs']]],
   ['Après livraison', [['exploitation', 'Exploitation et maintenance']]],
-  ['Dispositif', [['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['abonnement', 'Abonnement'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
+  ['Dispositif', [['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['abonnement', 'Abonnement'], ['marque', 'Marque et licence'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
   ['Plateforme', [['backoffice', 'Back-office']]],
 ];
 function renderNav() {
   const nAl = alertes().filter(a => a.n === 'crit').length, nNotif = (S.data.notifications || []).filter(x => !(x.lu_par || []).includes(S.user.id)).length;
-  $('#nav').innerHTML = VUES.filter(([g]) => g !== 'Plateforme' || S.adminPlateforme).map(([g, vs]) => '<h5>' + g + '</h5>' + vs.filter(([id]) => !(id === 'abonnement' && !(PEUT.admin.includes(S.role) || S.adminPlateforme))).map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('');
+  $('#nav').innerHTML = VUES.filter(([g]) => g !== 'Plateforme' || S.adminPlateforme).map(([g, vs]) => '<h5>' + g + '</h5>' + vs.filter(([id]) => !(['abonnement', 'marque'].includes(id) && !(PEUT.admin.includes(S.role) || S.adminPlateforme))).map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('') + (MARQUE.slug !== 'chantierlive' && !MARQUE.masquer ? '<p class="propulse side">Propulsé par <a href="https://chantierlive.com" target="_blank" rel="noopener">Chantier<b>Live</b></a></p>' : '');
 }
 function go(id, silencieux) { if (!RENDU[id]) id = 'cockpit'; if (!silencieux) fermerModal(); S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = RENDU[id](); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
 window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (RENDU[h] && h !== S.vue) go(h); });
@@ -287,7 +300,7 @@ RENDU.parametres = () => entete('Paramètres', 'Organisation, programme et compt
   '<div class="carte"><h3>Programme</h3>' + (S.prog ? '<div class="ligne"><span>Nom</span><b>' + esc(S.prog.nom) + '</b></div><div class="ligne"><span>Centre du site</span><b>' + (S.prog.centre_lat != null ? S.prog.centre_lat.toFixed(4) + ', ' + S.prog.centre_lng.toFixed(4) : 'non défini') + '</b></div><div class="ligne"><span>Rayon « sur site »</span><b>' + S.prog.rayon_m + ' m</b></div>' + (PEUT.admin.includes(S.role) ? '<p style="margin-top:.8rem;display:flex;gap:.6rem;flex-wrap:wrap"><button class="btn" onclick="definirCentre()">Définir le centre ici (ma position)</button><button class="btn" onclick="changerRayon()">Changer le rayon</button></p>' : '') : '<div class="vide">Aucun programme.</div>') + (S.programmes.length > 1 ? '<label class="champ" style="margin-top:.8rem">Changer de programme<select onchange="changerProg(this.value)">' + S.programmes.map(p => '<option value="' + p.id + '"' + (p.id === S.prog?.id ? ' selected' : '') + '>' + esc(p.nom) + '</option>').join('') + '</select></label>' : '') + '</div>' +
   '<div class="carte"><h3>Mon compte</h3><div class="ligne"><span>E-mail</span><b>' + esc(S.user.email) + '</b></div><p style="margin-top:.8rem;display:flex;gap:.6rem;flex-wrap:wrap"><button class="btn" onclick="changerMdp()">Changer le mot de passe</button><button class="btn" onclick="deconnexion()">Se déconnecter</button></p></div>' +
   '<div class="carte"><h3>Application</h3><p class="muted" style="font-size:.9rem">Version 0.3 · socle multi-clients. Ajoutez cette page à l’écran d’accueil de votre téléphone pour l’utiliser comme une application.</p><div class="ligne"><span>Temps réel</span><b id="etatRt">' + $('#conn span').textContent + '</b></div><div class="ligne"><span>Saisies en attente</span><b>' + S.fileAttente.length + '</b></div></div></div>';
-window.changerOrg = id => { localStorage.setItem('cl_org', id); localStorage.removeItem('cl_prog'); S.org = S.orgs.find(o => o.id === id); S.role = S.org.role; chargerProgrammes(); };
+window.changerOrg = async id => { localStorage.setItem('cl_org', id); localStorage.removeItem('cl_prog'); S.org = S.orgs.find(o => o.id === id); S.role = S.org.role; await chargerMarqueOrg(); chargerProgrammes(); };
 window.changerProg = id => { localStorage.setItem('cl_prog', id); chargerProgrammes(); };
 window.definirCentre = () => navigator.geolocation.getCurrentPosition(async p => { const { error } = await sb.from('programmes').update({ centre_lat: p.coords.latitude, centre_lng: p.coords.longitude }).eq('id', S.prog.id); if (error) return toast('<b>Erreur</b> ' + esc(error.message)); S.prog.centre_lat = p.coords.latitude; S.prog.centre_lng = p.coords.longitude; toast('<b>Centre du site défini</b> sur votre position.'); go('parametres', true); }, e => toast('Position indisponible : ' + esc(e.message)), { enableHighAccuracy: true, timeout: 12000 });
 window.changerRayon = async () => { const r = parseInt(prompt('Rayon « sur site » en mètres', S.prog.rayon_m), 10); if (!r) return; const { error } = await sb.from('programmes').update({ rayon_m: r }).eq('id', S.prog.id); if (error) return toast('<b>Erreur</b> ' + esc(error.message)); S.prog.rayon_m = r; go('parametres', true); };
@@ -298,4 +311,4 @@ $('#btnCompte').addEventListener('click', () => go('parametres'));
 window.go = go; window.fermerModal = fermerModal;
 
 /* ---------- amorçage ---------- */
-(async () => { const { data } = await sb.auth.getSession(); if (!data.session) afficherAuth(); })();
+// amorçage : voir initialiser() (le client Supabase est créé après résolution de la marque)
