@@ -1,5 +1,5 @@
 /* ============================================================
-   ChantierLive — application client · v0.8 (étapes 3 à 8 : socle multi-clients, saisie, paiement direct, licences et marque blanche, mode géré : comptes remis en main propre, contrats sur devis, plans et documents)
+   ChantierLive — application client · v0.9 (étapes 3 à 9 : socle multi-clients, saisie, paiement direct, licences et marque blanche, mode géré : comptes remis en main propre, contrats sur devis, plans et documents)
    Authentification, organisations, rôles, cockpit sur données réelles,
    pointage signé et géolocalisé, photos, temps réel.
    ============================================================ */
@@ -148,14 +148,14 @@ const VUES = [
   ['Terrain', [['chantier', 'Chantier'], ['pointage', 'Pointage et émargement']]],
   ['Ressources', [['rh', 'Ressources humaines'], ['achats', 'Achats et fournisseurs']]],
   ['Après livraison', [['exploitation', 'Exploitation et maintenance']]],
-  ['Dispositif', [['bienvenue', 'Démarrer'], ['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['abonnement', 'Contrat et factures'], ['marque', 'Marque et licence'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
+  ['Dispositif', [['bienvenue', 'Démarrer'], ['alertes', 'Alertes'], ['exports', 'Exports et rapports'], ['equipe', 'Comptes et accès'], ['abonnement', 'Contrat et factures'], ['marque', 'Marque et licence'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
   ['Plateforme', [['backoffice', 'Back-office']]],
 ];
 function renderNav() {
   const nAl = alertes().filter(a => a.n === 'crit').length, nNotif = (S.data.notifications || []).filter(x => !(x.lu_par || []).includes(S.user.id)).length;
   $('#nav').innerHTML = VUES.filter(([g]) => g !== 'Plateforme' || S.adminPlateforme).map(([g, vs]) => '<h5>' + g + '</h5>' + vs.filter(([id]) => !(['abonnement', 'marque'].includes(id) && !(PEUT.admin.includes(S.role) || S.adminPlateforme)) && !((MODULES_CACHES[S.role] || []).includes(id) && !S.adminPlateforme) && !(id === 'import' && !(PEUT.admin.includes(S.role) || S.adminPlateforme))).map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('') + (MARQUE.slug !== 'chantierlive' && !MARQUE.masquer ? '<p class="propulse side">Propulsé par <a href="https://chantierlive.com" target="_blank" rel="noopener">Chantier<b>Live</b></a></p>' : '');
 }
-function go(id, silencieux) { if (!RENDU[id] || (id === 'backoffice' && !S.adminPlateforme)) id = 'cockpit'; if (id === 'cockpit' && !S.prog && RENDU.bienvenue) id = 'bienvenue'; if (!silencieux) fermerModal(); if (window.finVisite) finVisite(); S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = (window.bandeauEssai ? bandeauEssai(id) : '') + RENDU[id](); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
+function go(id, silencieux) { if (!RENDU[id] || (id === 'backoffice' && !S.adminPlateforme)) id = 'cockpit'; if (id === 'cockpit' && !S.prog && RENDU.bienvenue) id = 'bienvenue'; if (!silencieux) fermerModal(); if (window.finVisite) finVisite(); S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = (window.bandeauEssai ? bandeauEssai(id) : '') + RENDU[id](); if (window.injecterExports) injecterExports(id); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
 window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (RENDU[h] && h !== S.vue) go(h); });
 const RENDU = {}, MONTE = {};
 

@@ -1,6 +1,6 @@
 /* ChantierLive — service worker : coque applicative en cache, réseau pour les données */
-const CACHE = 'chantierlive-v0.8.0';
-const COQUE = ['./', './index.html', './app.css', './app.js', './crud.js', './modules.js', './offline.js', './import.js', './abonnement.js', './marque.js', './licence.js', './essai.js', './comptes.js', './documents.js', './manifest.webmanifest', '../assets/brand/favicon.svg', '../assets/brand/mark.png'];
+const CACHE = 'chantierlive-v0.9.0';
+const COQUE = ['./', './index.html', './app.css', './app.js', './crud.js', './modules.js', './offline.js', './import.js', './abonnement.js', './marque.js', './licence.js', './essai.js', './comptes.js', './documents.js', './exports.js', './manifest.webmanifest', '../assets/brand/favicon.svg', '../assets/brand/mark.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(COQUE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {
