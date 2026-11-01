@@ -4,7 +4,7 @@
    Fichiers dans le compartiment privé « documents » (dossier = organisation / chantier), 25 Mo par fichier.
    ============================================================ */
 const CATEGORIES_DOC = { plan: 'Plans', maquette: 'Maquettes et images 3D', permis: 'Permis et autorisations', contrat: 'Contrats et marchés', rapport: 'Rapports et comptes rendus', photo: 'Photos officielles', autre: 'Autres documents' };
-const PEUT_DOC = ['promoteur', 'direction', 'chef_chantier', 'architecte', 'controle'];
+const PEUT_DOC = ['promoteur', 'direction', 'conducteur_travaux', 'chef_chantier', 'architecte', 'bureau_etudes', 'opc', 'geometre', 'controle', 'hse', 'finances', 'commercial', 'rh', 'achats', 'maintenance'];
 const tailleLisible = n => n == null ? '' : n < 1024 * 1024 ? Math.max(1, Math.round(n / 1024)) + ' Ko' : (n / 1048576).toFixed(1).replace('.', ',') + ' Mo';
 const iconeDoc = (mime, path) => /pdf/.test(mime) ? 'PDF' : /^image\//.test(mime) ? 'IMG' : /sheet|excel/.test(mime) ? 'XLS' : /word/.test(mime) ? 'DOC' : /presentation/.test(mime) ? 'PPT' : /dwg|dxf|acad/.test(mime + path) ? 'CAO' : /gltf|obj|3d/.test(mime + path) ? '3D' : /zip/.test(mime) ? 'ZIP' : 'FICH';
 

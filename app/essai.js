@@ -47,7 +47,7 @@ const VISITES = {
   chantier: [['#btnCam', 'Photo terrain', 'Prise depuis l’appareil, horodatée, géolocalisée, rattachée au chantier. Visible immédiatement par la direction.'],
     ['#photos', 'Fil des photos', 'Les photos de la semaine, par auteur et par zone. Cliquez pour agrandir ou lire la légende.']],
   equipe: [['#membres', 'Les comptes', 'Chaque personne a un rôle. La base de données applique les droits : l’interface ne fait que les refléter. « Mot de passe » génère un nouveau provisoire ; « Désactiver » coupe l’accès sans rien effacer.'],
-    ['#nbComptes', 'Créer un compte', 'Nom, e-mail, téléphone, rôle : un mot de passe provisoire s’affiche une seule fois, à transmettre par WhatsApp ou SMS. La personne le change à sa première connexion.']],
+    ['#nbComptes', 'Créer un compte', 'Nom, e-mail, téléphone, rôle parmi dix-neuf postes, titre libre, chantiers accessibles : un mot de passe provisoire s’affiche une seule fois, à transmettre par WhatsApp ou SMS. La personne le change à sa première connexion.']],
   documents: [['#docListe', 'Plans et documents', 'Plans, maquettes et images 3D, permis, contrats, rapports : datés, signés de leur auteur, consultables par toute l’équipe, même sur le terrain.']],
   import: [['#xlsx', 'Le classeur', 'Téléchargez le modèle, remplissez une feuille par table, importez. Les feuilles vides sont ignorées.'],
     ['#btnImporter', 'Importer', 'Le compte rendu liste ce qui a été créé et les lignes rejetées, avec la raison.']],
