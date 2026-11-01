@@ -1,1 +1,35 @@
-{"name":"ChantierLive","short_name":"ChantierLive","description":"Suivi et contrôle de chantier en direct","start_url":"./","scope":"./","display":"standalone","background_color":"#F7F3EB","theme_color":"#0B1D33","lang":"fr","icons":[{"src":"../assets/brand/mark.png","sizes":"1024x1024","type":"image/png","purpose":"any"}]}
+{
+  "id": "/app/",
+  "name": "ChantierLive",
+  "short_name": "ChantierLive",
+  "description": "Suivi et contrôle de chantier en direct : pointage signé et géolocalisé, photos, livraisons, alertes.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#0B1D33",
+  "theme_color": "#0B1D33",
+  "lang": "fr",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    { "src": "../assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "../assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "../assets/brand/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "../assets/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "../assets/brand/mark.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Pointer", "short_name": "Pointer", "description": "Émargement signé et géolocalisé", "url": "./#pointage", "icons": [{ "src": "../assets/brand/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Photo de chantier", "short_name": "Photo", "description": "Prendre une photo horodatée", "url": "./#chantier", "icons": [{ "src": "../assets/brand/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Cockpit", "short_name": "Cockpit", "url": "./#cockpit", "icons": [{ "src": "../assets/brand/icon-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [
+    { "src": "../assets/store/01-cockpit.png", "sizes": "750x1624", "type": "image/png", "form_factor": "narrow", "label": "Cockpit : six paramètres de réussite et alertes" },
+    { "src": "../assets/store/02-pointage.png", "sizes": "750x1624", "type": "image/png", "form_factor": "narrow", "label": "Pointage signé et géolocalisé" },
+    { "src": "../assets/store/03-chantier.png", "sizes": "750x1624", "type": "image/png", "form_factor": "narrow", "label": "Photos, caméras et journal du chantier" },
+    { "src": "../assets/store/04-documents.png", "sizes": "750x1624", "type": "image/png", "form_factor": "narrow", "label": "Plans et documents" },
+    { "src": "../assets/store/05-alertes.png", "sizes": "750x1624", "type": "image/png", "form_factor": "narrow", "label": "Alertes avant qu'il ne soit trop tard" }
+  ]
+}
