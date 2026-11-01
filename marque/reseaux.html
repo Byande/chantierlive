@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Visuels réseaux sociaux ChantierLive</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400..600,0..100&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kit.css">
+<style>
+body{padding:40px;background:#d8d3c9}
+.v{position:relative;overflow:hidden;background:var(--encre);color:var(--craie);margin:0 0 40px;box-shadow:0 20px 60px rgba(11,29,51,.25)}
+.v .grain{opacity:.05}
+.lbl{font:600 13px/1.4 var(--sans);color:#6F7681;margin:0 0 8px}
+/* Avatar 1024 */
+#avatar{width:1024px;height:1024px;display:grid;place-items:center}
+#avatar img{width:640px}
+/* Bannière LinkedIn 1584×396 */
+#banniere{width:1584px;height:396px}
+#banniere .in{position:absolute;inset:0;padding:0 96px;display:flex;align-items:center;justify-content:space-between;gap:60px}
+#banniere .logo{width:420px}
+#banniere .txt{font-family:var(--serif);font-size:54px;letter-spacing:-.025em;line-height:1.05;font-weight:500;text-align:right}
+#banniere .txt em{color:#F08A66;font-style:italic;font-variation-settings:'SOFT' 60}
+#banniere .txt small{display:block;font-family:var(--sans);font-size:18px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:rgba(247,243,235,.62);margin-top:18px}
+/* Open Graph 1200×630 */
+#og{width:1200px;height:630px}
+#og .in{position:absolute;inset:0;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between}
+#og .logo{width:360px}
+#og h1{font-size:62px;max-width:700px}
+#og h1 em{color:#F08A66}
+#og .site{font-family:var(--sans);font-size:20px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:rgba(247,243,235,.65)}
+#og .stage{position:absolute;right:-200px;bottom:-190px;width:600px;transform:rotate(-6deg)}
+/* Posts 1080×1080 */
+.post{width:1080px;height:1080px}
+.post .in{position:absolute;inset:0;padding:88px;display:flex;flex-direction:column}
+.post .logo{width:300px}
+.post h2{font-size:72px;margin-top:auto;max-width:900px}
+.post p{font-family:var(--sans);font-size:28px;line-height:1.45;margin-top:28px;max-width:860px;color:rgba(247,243,235,.8)}
+.post .bas{display:flex;justify-content:space-between;align-items:center;margin-top:56px;font-family:var(--sans);font-size:20px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:rgba(247,243,235,.62)}
+.post .n{font-family:var(--serif);font-size:200px;line-height:.9;letter-spacing:-.04em;color:#F08A66;font-weight:500;margin-top:auto}
+.post.clair{background:var(--craie);color:var(--encre)}.post.clair p{color:rgba(11,29,51,.75)}.post.clair .bas{color:var(--ciment)}.post.clair .n{color:var(--signal)}
+.post.clair h2 em{color:var(--signal)}
+.post.photo img.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.post.photo .in{background:linear-gradient(180deg,rgba(6,17,31,.25),rgba(6,17,31,.92))}
+</style>
+</head>
+<body>
+<p class="lbl">Avatar (profil LinkedIn, WhatsApp Business, X, YouTube) — 1024 × 1024</p>
+<div class="v" id="avatar"><img src="../assets/brand/mark-inverse.svg" alt=""></div>
+
+<p class="lbl">Bannière LinkedIn (page entreprise) — 1584 × 396</p>
+<div class="v" id="banniere"><div class="grain"></div><div class="in"><img class="logo" src="../assets/brand/logo-inverse.svg" alt="ChantierLive"><div class="txt">Votre chantier, <em>en direct</em>.<small>Suivi et contrôle de chantier · Paris · Douala · Conakry</small></div></div></div>
+
+<p class="lbl">Image de partage (Open Graph, WhatsApp, LinkedIn) — 1200 × 630</p>
+<div class="v" id="og"><div class="grain"></div><div class="in"><img class="logo" src="../assets/brand/logo-inverse.svg" alt="ChantierLive"><div><h1>Votre chantier, <em>en direct</em>, du foncier à la remise des clés.</h1><div class="site" style="margin-top:28px">chantierlive.com</div></div></div><div class="stage bezel sombre" style="padding:6px;border-radius:22px"><div class="core" style="border-radius:16px"><img src="../assets/img/app-cockpit.jpg" alt=""></div></div></div>
+
+<p class="lbl">Publication 1 — 1080 × 1080</p>
+<div class="v post" id="post1"><div class="grain"></div><div class="in"><img class="logo" src="../assets/brand/logo-inverse.svg" alt="ChantierLive"><h2>Chaque présence est <em>signée sur place</em>.</h2><p>Position, heure et signature du doigt, enregistrées sur le téléphone du chef d'équipe, impossibles à modifier. La paie se calcule sur la réalité.</p><div class="bas"><span>Pointage et émargement</span><span>chantierlive.com</span></div></div></div>
+
+<p class="lbl">Publication 2 — 1080 × 1080</p>
+<div class="v post clair" id="post2"><div class="in"><img class="logo" src="../assets/brand/logo.svg" alt="ChantierLive"><div class="n">6</div><h2 style="margin-top:24px">paramètres de réussite, <em>recalculés</em> à chaque saisie.</h2><p>Délai, coût, périmètre, qualité, risques, bénéfices. Les alertes partent avant la dérive : livraison en retard, stock sous le seuil, non-conformité, pointage hors site.</p><div class="bas"><span>Cockpit du programme</span><span>chantierlive.com</span></div></div></div>
+
+<p class="lbl">Publication 3 — 1080 × 1080</p>
+<div class="v post photo" id="post3"><img class="ph" src="../assets/img/chantier_controle.jpg" alt=""><div class="in"><img class="logo" src="../assets/brand/logo-inverse.svg" alt="ChantierLive"><h2>Les photos de chantier ne se perdent plus <em>dans WhatsApp</em>.</h2><p>Horodatées, géolocalisées, classées par chantier et par zone, visibles au siège la seconde suivante. Votre preuve, à chaque étape clé.</p><div class="bas"><span>Photos et journal de chantier</span><span>chantierlive.com</span></div></div></div>
+</body></html>

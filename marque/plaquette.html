@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="fr" data-w="210" data-h="297" data-titre="Plaquette ChantierLive (A4, 4 pages)">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plaquette ChantierLive — Votre chantier, en direct</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400..600,0..100&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kit.css">
+<script src="kit.js"></script>
+<style>
+.couv .logo{width:58mm}
+.couv h1{font-size:44pt;max-width:150mm;margin-top:6mm}
+.couv .lead{max-width:120mm;margin-top:6mm;font-size:12.5pt}
+.couv .stage{position:absolute;right:-28mm;bottom:-22mm;width:190mm;transform:rotate(-4deg)}
+.couv .villes{position:absolute;right:var(--marge);top:calc(var(--marge) + 3.2mm);font-size:8pt;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:rgba(247,243,235,.7)}
+.vs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm;margin-top:5mm}
+.vs .carte p+p{margin-top:2.5mm}
+.vs .q{font-family:var(--serif);font-size:12pt;letter-spacing:-.01em;line-height:1.15}
+.vs .q::before{content:"« "}.vs .q::after{content:" »"}
+.etapes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm;margin-top:5mm}
+.etapes .e{padding:5mm 5.5mm;border-radius:4mm;background:var(--encre);color:var(--craie)}
+.etapes .e b{display:block;font-family:var(--serif);font-size:13pt;font-weight:500;letter-spacing:-.01em;margin:1.5mm 0 2mm}
+.etapes .e .n{color:#F08A66}
+.etapes .e p{color:rgba(247,243,235,.78);font-size:9pt}
+.chiffres{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:6mm}
+.mods{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2.5mm;margin-top:4mm}
+.mods .m{padding:2.8mm 3.8mm;border-radius:3.5mm;background:#fff;box-shadow:inset 0 0 0 .3mm var(--hair)}
+.mods .m b{display:block;font-size:9.6pt;margin-bottom:.6mm}
+.mods .m p{font-size:8.3pt;color:rgba(11,29,51,.72);line-height:1.38}
+.roles{width:100%;border-collapse:collapse;margin-top:3mm;font-size:8.4pt}
+.roles th{text-align:left;font-size:6.8pt;letter-spacing:.14em;text-transform:uppercase;color:var(--ciment);padding:1.6mm 2.5mm;border-bottom:.3mm solid var(--hair-2)}
+.roles td{padding:1.5mm 2.5mm;border-bottom:.25mm solid var(--hair);vertical-align:top}
+.roles td:first-child{font-weight:700;white-space:nowrap}
+.offre{display:grid;grid-template-columns:1.15fr .85fr;gap:5mm;margin-top:5mm}
+.contact{display:grid;grid-template-columns:1fr auto;gap:6mm;align-items:center;margin-top:6mm;padding:6mm;border-radius:4mm;background:var(--encre);color:var(--craie)}
+.contact .l{font-size:10pt;line-height:1.6}
+.contact .l b{font-family:var(--serif);font-weight:500;font-size:15pt;display:block;letter-spacing:-.01em;margin-bottom:1.5mm}
+.contact .qr{width:26mm;height:26mm;background:#fff;padding:2mm;border-radius:2.5mm}
+.sec{margin-top:4.5mm}
+.secu .carte{padding:3.5mm 4mm}.secu .carte b{font-size:9pt}.secu .carte p{font-size:7.9pt;line-height:1.35}
+.terrain{display:grid;grid-template-columns:62mm 1fr;gap:6mm;align-items:center;margin-top:6mm}
+.terrain .ph{border-radius:4mm;overflow:hidden;height:44mm}.terrain .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.pied span:last-child{white-space:nowrap}
+</style>
+</head>
+<body>
+
+<!-- Page 1 : couverture -->
+<section class="page dark couv">
+  <div class="grain"></div>
+  <div class="in">
+    <img class="logo" src="../assets/brand/logo-inverse.svg" alt="ChantierLive">
+    <div style="margin-top:22mm"><span class="eyebrow"><i></i>Suivi et contrôle de chantier en direct</span>
+    <h1>Votre chantier, <em>en direct</em>, du foncier à la remise des clés.</h1>
+    <p class="lead">Présences signées et géolocalisées, photos horodatées, livraisons, coûts et délais : tout ce qui se passe sur le terrain, sur un seul écran, à la seconde. Pour les promoteurs, maîtres d'ouvrage et directions de programme d'Afrique et d'Europe.</p></div>
+    <div class="villes">chantierlive.com &nbsp;·&nbsp; Paris · Douala · Conakry</div>
+  </div>
+  <div class="stage bezel sombre"><div class="core"><img src="../assets/img/app-cockpit.jpg" alt="Cockpit ChantierLive"></div></div>
+</section>
+
+<!-- Page 2 : constat, fonctionnement, chiffres -->
+<section class="page craie">
+  <div class="in">
+    <span class="eyebrow"><i></i>01 · Le constat</span>
+    <h2>Ce que vous ne voyez pas <em>vous coûte</em>.</h2>
+    <div class="vs">
+      <div class="carte"><span class="n">Aujourd'hui</span><p class="q">On apprend le retard quand il est déjà là.</p><p><b>Avec ChantierLive</b> : six paramètres de réussite, délai, coût, périmètre, qualité, risques, bénéfices, recalculés à chaque saisie. L'alerte part avant la dérive.</p></div>
+      <div class="carte"><span class="n">Aujourd'hui</span><p class="q">Les présences se déclarent sur papier, la paie se discute.</p><p><b>Avec ChantierLive</b> : chaque agent signe du doigt sur le téléphone du chef d'équipe. Position, heure et signature sont enregistrées et ne se modifient plus. La paie se calcule sur les présences réelles.</p></div>
+      <div class="carte"><span class="n">Aujourd'hui</span><p class="q">Les photos se perdent dans WhatsApp.</p><p><b>Avec ChantierLive</b> : photos datées et localisées, classées par chantier et par zone, visibles au siège la seconde suivante. Votre preuve, à chaque étape clé.</p></div>
+    </div>
+
+    <div class="sec"><span class="eyebrow"><i></i>02 · Comment ça marche</span>
+    <h2>Un téléphone sur le terrain, <em>un écran</em> au bureau.</h2>
+    <div class="etapes">
+      <div class="e"><span class="n">Sur le chantier</span><b>Le chef d'équipe pointe, photographie, note.</b><p>Un seul téléphone par équipe. Les ouvriers n'ont pas de compte : ils signent sur son écran. Sans réseau, tout est conservé et envoyé dès que la connexion revient.</p></div>
+      <div class="e"><span class="n">Au siège</span><b>Le cockpit recalcule en continu.</b><p>Délai, coût, périmètre, qualité, risques, bénéfices. Budget par poste, achats et stocks, effectif et paie, plans et documents, journal de chantier.</p></div>
+      <div class="e"><span class="n">Avant qu'il ne soit trop tard</span><b>Les alertes vous trouvent.</b><p>Livraison en retard, stock sous le seuil, caméra hors ligne, non-conformité majeure, congé à valider, pointage hors site : dans l'application, par e-mail, par WhatsApp.</p></div>
+    </div></div>
+
+    <div class="chiffres">
+      <div class="carte"><div class="num">6<small>paramètres de réussite</small></div></div>
+      <div class="carte"><div class="num">12<small>modules, un seul écran</small></div></div>
+      <div class="carte"><div class="num">19<small>rôles, un accès par chantier</small></div></div>
+      <div class="carte"><div class="num">UE<small>données hébergées et sauvegardées</small></div></div>
+    </div>
+    <div class="terrain"><div class="ph"><img src="../assets/img/chantier_controle.jpg" alt="Sur le chantier"></div><div><span class="eyebrow"><i></i>Conçu pour le terrain</span><ul class="chk"><li><b>Sans réseau</b> : pointages et photos sont conservés sur le téléphone, puis envoyés dès que la connexion revient.</li><li><b>Un téléphone par équipe</b>, de grands boutons, une signature du doigt : pas de formation longue pour les chefs d'équipe.</li><li><b>Sur téléphone, tablette et ordinateur</b>, en français et en anglais ; application Android et iOS.</li></ul></div></div>
+    <div class="pied"><span>ChantierLive · Votre chantier, en direct.</span><span>2 / 4</span></div>
+  </div>
+</section>
+
+<!-- Page 3 : modules, rôles, sécurité -->
+<section class="page">
+  <div class="in">
+    <span class="eyebrow"><i></i>03 · Les modules</span>
+    <h2>Tout le programme, <em>du foncier</em> à l'exploitation.</h2>
+    <div class="mods">
+      <div class="m"><b>Cockpit</b><p>Six paramètres, alertes à traiter, tendance du programme en un regard.</p></div>
+      <div class="m"><b>Site et quartiers</b><p>Emprise, lots, phases, avancement par quartier et par ouvrage.</p></div>
+      <div class="m"><b>Finances et ventes</b><p>Budget par poste, engagements, factures, réservations et ventes.</p></div>
+      <div class="m"><b>Risques et qualité</b><p>Registre des risques, non-conformités, contrôles, levées de réserves.</p></div>
+      <div class="m"><b>Plans et documents</b><p>Plans, maquettes, permis, contrats, procès-verbaux, à portée de main.</p></div>
+      <div class="m"><b>Chantier</b><p>Photos horodatées, caméras, journal de chantier, visites.</p></div>
+      <div class="m"><b>Pointage et émargement</b><p>Arrivée, départ, signature du doigt, position, hors site signalé.</p></div>
+      <div class="m"><b>Ressources humaines et paie</b><p>Équipes, agents, congés, paie calculée sur les présences, bulletins.</p></div>
+      <div class="m"><b>Achats, fournisseurs, stocks</b><p>Commandes, livraisons attendues, seuils de stock, bons de commande.</p></div>
+      <div class="m"><b>Exploitation et maintenance</b><p>Équipements, interventions, contrats après la livraison.</p></div>
+      <div class="m"><b>Exports et rapports</b><p>Excel, CSV, rapport de chantier, feuille de présence, bulletins, registre.</p></div>
+      <div class="m"><b>Comptes et accès</b><p>Un compte par personne, rôle, titre, chantiers autorisés, journal d'audit.</p></div>
+    </div>
+
+    <div class="sec"><span class="eyebrow"><i></i>04 · Les rôles</span>
+    <h2>Chacun voit <em>ce qui le concerne</em>.</h2>
+    <table class="roles">
+      <tr><th>Famille</th><th>Rôles</th><th>Accès</th></tr>
+      <tr><td>Maîtrise d'ouvrage</td><td>Promoteur, direction, finances, commercial</td><td>Tout le programme, ou le volet financier et commercial</td></tr>
+      <tr><td>Maîtrise d'œuvre, contrôle</td><td>Architecte, bureau d'études, OPC, géomètre, contrôle, HSE</td><td>Plans, planning, qualité, sécurité</td></tr>
+      <tr><td>Exécution</td><td>Conducteur de travaux, chef de chantier, chef d'équipe, magasinier, gardien</td><td>Le chantier au quotidien, limité aux chantiers affectés</td></tr>
+      <tr><td>Supports</td><td>Achats, RH et paie, maintenance</td><td>Commandes et stocks, effectif et paie, après livraison</td></tr>
+      <tr><td>Consultation</td><td>Lecture seule</td><td>Banque, investisseur, partenaire : voit, ne modifie pas</td></tr>
+    </table>
+    <p class="muted" style="margin-top:2.5mm;font-size:8.3pt">Les droits sont appliqués par la base de données, pas seulement par l'écran. Les salaires ne sont visibles que de la direction, des RH et des finances.</p></div>
+
+    <div class="sec"><span class="eyebrow"><i></i>05 · Sécurité et confiance</span>
+    <div class="grid g4 secu" style="margin-top:2mm">
+      <div class="carte"><b>Hébergement européen</b><p class="muted" style="font-size:8.3pt">Données chiffrées en transit et au repos, sauvegardées chaque jour.</p></div>
+      <div class="carte"><b>Preuves inaltérables</b><p class="muted" style="font-size:8.3pt">Pointages signés et photos horodatées ne se modifient plus après enregistrement.</p></div>
+      <div class="carte"><b>Vos données vous appartiennent</b><p class="muted" style="font-size:8.3pt">Export complet du chantier en Excel à tout moment, sans frais.</p></div>
+      <div class="carte"><b>Journal d'audit</b><p class="muted" style="font-size:8.3pt">Qui a fait quoi, quand : chaque action sensible est tracée.</p></div>
+    </div></div>
+    <div class="pied"><span>ChantierLive · Votre chantier, en direct.</span><span>3 / 4</span></div>
+  </div>
+</section>
+
+<!-- Page 4 : offre, démarrage, contact -->
+<section class="page craie">
+  <div class="in">
+    <span class="eyebrow"><i></i>06 · L'offre</span>
+    <h2>Un contrat clair, <em>sur devis</em>.</h2>
+    <div class="offre">
+      <div class="carte"><span class="n">Compris dans le contrat</span>
+        <ul class="chk">
+          <li>Tous les modules, sans option cachée.</li>
+          <li>Le nombre de chantiers et de comptes utilisateurs convenus, pour la durée choisie.</li>
+          <li>L'ouverture de votre espace par ChantierLive et la validation de chaque compte avec son rôle.</li>
+          <li>La formation de démarrage du promoteur et des chefs d'équipe.</li>
+          <li>L'assistance par e-mail et WhatsApp, les mises à jour, l'hébergement européen, les sauvegardes.</li>
+          <li>Vos exports Excel et PDF à tout moment.</li>
+        </ul></div>
+      <div class="carte"><span class="n">Sur mesure</span>
+        <ul class="chk vert">
+          <li>Formation sur site, accompagnement au démarrage.</li>
+          <li>Marque blanche : votre nom, votre logo, vos couleurs.</li>
+          <li>Instance dédiée en Europe ou sur vos serveurs.</li>
+          <li>Reprise de vos données existantes (Excel).</li>
+        </ul>
+        <p class="muted" style="margin-top:3mm;font-size:8.3pt">Paiement par virement bancaire ou mobile money, sur facture. L'accès est ouvert dès réception.</p></div>
+    </div>
+
+    <div class="sec"><span class="eyebrow"><i></i>07 · Démarrer</span>
+    <h2>Opérationnel <em>en une semaine</em>.</h2>
+    <div class="etapes">
+      <div class="e"><span class="n">Jour 1</span><b>Démonstration, 45 minutes.</b><p>En visioconférence ou sur votre chantier. Nous partons de votre programme réel : vos quartiers, vos équipes, vos fournisseurs.</p></div>
+      <div class="e"><span class="n">Jours 2 à 5</span><b>Devis, paiement, ouverture.</b><p>Un devis adapté à votre périmètre. Dès réception du paiement, votre espace est ouvert et votre compte promoteur créé.</p></div>
+      <div class="e"><span class="n">Jour 6</span><b>Formation, deux heures.</b><p>Le promoteur crée son chantier et ses comptes ; les chefs d'équipe pointent le lendemain. Fiche de prise en main remise.</p></div>
+    </div></div>
+
+    <div class="sec"><span class="eyebrow"><i></i>08 · Qui sommes-nous</span>
+    <p style="max-width:150mm;font-size:9.6pt">ChantierLive est née d'un programme immobilier réel de 165 hectares piloté en Guinée, conçue par un directeur de programmes et un architecte-urbaniste. Le produit est développé et hébergé en Europe ; l'accompagnement est assuré à Conakry, Douala et Paris par LevENT-IT et son représentant local au Cameroun, ETS 2BY Consulting.</p></div>
+
+    <div class="contact">
+      <div class="l"><b>Parlons de votre chantier.</b>contact@chantierlive.com &nbsp;·&nbsp; WhatsApp +237 6 50 15 74 61<br>Demandez une démonstration sur <b style="display:inline;font-size:10pt;font-family:var(--sans);font-weight:700">chantierlive.com/demo</b></div>
+      <img class="qr" src="kit/qr-demo.svg" alt="QR code : chantierlive.com/demo">
+    </div>
+    <div class="pied"><span>ChantierLive est une marque de Paul Mirabeau Byande, exploitée sous licence par LevENT-IT (France) et ETS 2BY Consulting (Cameroun). Données hébergées dans l'Union européenne.</span><span>4 / 4</span></div>
+  </div>
+</section>
+</body></html>

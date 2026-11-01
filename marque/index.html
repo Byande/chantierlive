@@ -3,100 +3,195 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Charte de marque ChantierLive</title>
-<meta name="description" content="Logo, couleurs, typographies, ton et règles d'usage de la marque ChantierLive.">
+<title>Marque et communication — ChantierLive</title>
+<meta name="description" content="Charte graphique ChantierLive : logo, couleurs, typographies, images, ton, et le kit de communication (plaquette, flyer, carte de visite, signature e-mail, visuels réseaux sociaux).">
 <link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400..600,0..100&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/site.css">
 <style>
-.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-top:1.6rem}
-.sw div{border-radius:var(--r-md);padding:5.5rem 1rem 1rem;box-shadow:inset 0 0 0 1px var(--hair);font-size:.8rem;line-height:1.4}
-.sw b{display:block;font-size:.95rem}
+section{padding-top:0}
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.8rem;margin-top:1.6rem}
+.sw div{border-radius:var(--r-md);padding:4.6rem 1rem 1rem;box-shadow:inset 0 0 0 1px var(--hair);font-size:.78rem;line-height:1.4}
+.sw b{display:block;font-size:.95rem}.sw .code{display:block;font-family:ui-monospace,Menlo,monospace;font-size:.7rem;opacity:.85;margin:.2rem 0 .4rem}
 .logos{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.6rem}
-.logos .l{border-radius:var(--r-lg);padding:3rem;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--hair)}
-.logos .l img{width:min(100%,360px)}
+.logos .l{position:relative;border-radius:var(--r-lg);padding:2.6rem;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--hair);min-height:180px}
+.logos .l img{width:min(100%,340px)}
+.logos .l small{position:absolute;left:1rem;bottom:.8rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;opacity:.6}
+.symb{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1rem;margin-top:1rem}
+.symb .l{min-height:140px;padding:1.6rem}.symb .l img{width:80px}
 .spec{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.6rem}
 .spec .s{padding:1.6rem;border-radius:var(--r-lg);background:var(--papier);box-shadow:inset 0 0 0 1px var(--hair)}
-.spec .big{font-family:var(--serif);font-size:3.4rem;line-height:1;letter-spacing:-.03em;font-weight:500}
+.spec .big{font-family:var(--serif);font-size:3.2rem;line-height:1;letter-spacing:-.03em;font-weight:500}
 .spec .big em{color:var(--signal);font-weight:400}
 .dont{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin-top:1.4rem}
 .dont div{padding:1.1rem 1.2rem;border-radius:var(--r-md);background:var(--papier);box-shadow:inset 0 0 0 1px var(--hair);font-size:.92rem;color:var(--encre-70)}
 .dont b{display:block;color:var(--encre);margin-bottom:.2rem}
+.non{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.8rem;margin-top:1.4rem}
+.non figure{margin:0;border-radius:var(--r-md);background:var(--papier);box-shadow:inset 0 0 0 1px var(--hair);overflow:hidden}
+.non .z{height:96px;display:grid;place-items:center;overflow:hidden;position:relative}
+.non .z img{width:150px}
+.non .z::after{content:"";position:absolute;inset:0;background:linear-gradient(to top right,transparent calc(50% - 1px),var(--signal) calc(50% - 1px),var(--signal) calc(50% + 1px),transparent calc(50% + 1px));opacity:.85}
+.non figcaption{padding:.7rem .9rem .9rem;font-size:.82rem;color:var(--encre-70)}.non figcaption b{display:block;color:var(--encre)}
+.zone{position:relative;display:inline-block;padding:27px;background:repeating-linear-gradient(45deg,rgba(228,87,46,.07) 0 6px,transparent 6px 12px);border:1px dashed rgba(228,87,46,.5);border-radius:6px}
+.zone img{width:300px;display:block;background:var(--papier)}
+.tab{width:100%;border-collapse:collapse;margin-top:1.2rem;font-size:.92rem;background:var(--papier);border-radius:var(--r-md);overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair)}
+.tab th{text-align:left;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ciment);padding:.7rem .9rem;border-bottom:1px solid var(--hair-2)}
+.tab td{padding:.6rem .9rem;border-bottom:1px solid var(--hair);vertical-align:top}.tab tr:last-child td{border-bottom:0}
+.tab a{color:var(--signal);font-weight:600}
 .dl{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
-@media (max-width:760px){.logos,.spec{grid-template-columns:1fr}}
+.apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1.6rem}
+.apps .card{padding:0;overflow:hidden;gap:0}
+.apps .card .im{background:var(--sable);padding:1.2rem;display:grid;place-items:center;min-height:200px}
+.apps .card .im img{max-width:100%;max-height:260px;border-radius:.5rem;box-shadow:0 14px 30px -18px rgba(11,29,51,.5)}
+.apps .card .tx{padding:1.2rem 1.4rem 1.4rem}.apps .card .tx p{font-size:.9rem;color:var(--encre-70);margin:.3rem 0 .8rem}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin-top:1.2rem}
+.gal img{width:100%;border-radius:var(--r-md);display:block;box-shadow:0 14px 30px -18px rgba(11,29,51,.5)}
+.lex{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.4rem}
+.lex div{padding:1rem 1.2rem;border-radius:var(--r-md);background:var(--papier);box-shadow:inset 0 0 0 1px var(--hair);font-size:.9rem}
+.lex b{display:block;margin-bottom:.4rem}.lex .ok b{color:var(--sur-site)}.lex .ko b{color:var(--signal)}
+.lex ul{margin:0;padding-left:1.1rem}.lex li{margin:.15rem 0}
+@media (max-width:760px){.logos,.spec,.lex{grid-template-columns:1fr}}
+@media print{body::before,body::after{display:none!important}.nav,.menu,footer,.dl{display:none!important}section{break-inside:avoid}.rv{opacity:1!important;transform:none!important;filter:none!important}body{font-size:13px}h1{font-size:2.6rem}h2{font-size:1.6rem}.sw div{padding-top:2.6rem}.apps .card .im{min-height:0}}
 </style>
 </head>
 <body>
-<header class="page-head"><div class="wrap"><span class="eyebrow rv"><i></i>Charte de marque · version 1.0 · octobre 2026</span><h1 class="rv d1">Chantier<em>Live</em></h1><p class="lead rv d2">Une marque de terrain, précise et chaleureuse : l'encre du plan, la craie du bureau d'études, le point rouge du direct. Ce document fixe le logo, les couleurs, les typographies, le ton et les règles d'usage. Version imprimable : <a href="Charte_ChantierLive.pdf" style="color:var(--signal)">PDF</a>.</p></div></header>
+<header class="page-head"><div class="wrap"><span class="eyebrow rv"><i></i>Marque et communication · version 2.0 · novembre 2026</span><h1 class="rv d1">Chantier<em>Live</em></h1><p class="lead rv d2">Une marque de terrain, précise et chaleureuse : l'encre du plan, la craie du bureau d'études, le point du direct. Cette page fixe le logo, les couleurs, les typographies, les images et le ton, et réunit tous les supports de communication prêts à l'emploi : plaquette, flyer, carte de visite, signature e-mail, visuels pour les réseaux sociaux.</p>
+<div class="dl rv d3"><a class="btn btn-primary btn-sm" href="Charte_ChantierLive.pdf">Charte (PDF)<span class="ico">↓</span></a><a class="btn btn-ghost btn-sm" href="kit/Plaquette_ChantierLive.pdf">Plaquette A4<span class="ico">↓</span></a><a class="btn btn-ghost btn-sm" href="kit/Flyer_ChantierLive.pdf">Flyer A5<span class="ico">↓</span></a><a class="btn btn-ghost btn-sm" href="kit/Carte_de_visite_ChantierLive.pdf">Carte de visite<span class="ico">↓</span></a><a class="btn btn-ghost btn-sm" href="kit/Kit_marque_ChantierLive.zip">Kit complet (ZIP)<span class="ico">↓</span></a></div></div></header>
 
-<section style="padding-top:1rem"><div class="wrap">
+<section><div class="wrap">
   <span class="eyebrow rv"><i></i>01 · L'idée</span><h2 class="rv d1">Le repère et le point.</h2>
   <div class="split" style="margin-top:1.6rem;align-items:start">
-    <div class="prose rv"><p>Le symbole associe deux signes que tout chef de chantier reconnaît : <b>les équerres de repérage</b> d'un plan, qui délimitent l'emprise d'un ouvrage ou le cadre d'une caméra, et <b>le point rouge du direct</b>, celui des enregistreurs et des retransmissions. Ensemble, ils disent la promesse en un regard : ce chantier est cadré, et il est suivi en ce moment même.</p><p>Le nom s'écrit en un seul mot, « ChantierLive », avec « Live » en couleur signal. Il ne se traduit pas et ne prend pas d'espace.</p></div>
+    <div class="prose rv"><p>Le symbole associe deux signes que tout chef de chantier reconnaît : <b>les équerres de repérage</b> d'un plan, qui délimitent l'emprise d'un ouvrage ou le cadre d'une caméra, et <b>le point du direct</b>, celui des enregistreurs et des retransmissions. Ensemble, ils disent la promesse en un regard : ce chantier est cadré, et il est suivi en ce moment même.</p><p>Le nom s'écrit en un seul mot, <b>ChantierLive</b>, avec un L majuscule et « Live » en couleur signal. Il ne se traduit pas, ne prend pas d'espace et ne s'abrège pas (« CL » est réservé aux identifiants techniques).</p><p>La signature de la marque est <b>« Votre chantier, en direct. »</b> ; sa version longue, pour les couvertures : « Votre chantier, en direct, du foncier à la remise des clés. »</p></div>
     <div class="rv d1"><div class="bezel"><div class="core" style="padding:3rem;display:grid;place-items:center"><img src="../assets/brand/mark.svg" alt="Symbole ChantierLive" style="width:160px"></div></div></div>
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <span class="eyebrow rv"><i></i>02 · Logo</span><h2 class="rv d1">Deux versions, quatre fichiers.</h2>
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>02 · Le logo</span><h2 class="rv d1">Un système, <em>six versions</em>.</h2>
+  <p class="lead rv d2" style="margin-top:1rem">Le logo horizontal est la version de référence. La version verticale sert aux formats carrés et aux couvertures ; le symbole seul, aux icônes, favicons et avatars ; les versions monochromes, aux impressions une couleur, aux gravures et aux fonds photo.</p>
   <div class="logos rv d1">
-    <div class="l" style="background:var(--papier)"><img src="../assets/brand/logo.svg" alt="Logo ChantierLive sur fond clair"></div>
-    <div class="l" style="background:var(--nuit)"><img src="../assets/brand/logo-inverse.svg" alt="Logo ChantierLive sur fond sombre"></div>
-    <div class="l" style="background:var(--craie)"><img src="../assets/brand/mark.svg" alt="Symbole seul" style="width:96px"></div>
-    <div class="l" style="background:var(--encre)"><img src="../assets/brand/mark-inverse.svg" alt="Symbole seul, inversé" style="width:96px"></div>
+    <div class="l" style="background:var(--papier)"><img src="../assets/brand/logo.svg" alt="Logo ChantierLive sur fond clair"><small>Référence · fond clair</small></div>
+    <div class="l" style="background:var(--nuit)"><img src="../assets/brand/logo-inverse.svg" alt="Logo ChantierLive sur fond sombre"><small style="color:#fff">Fond sombre</small></div>
+    <div class="l" style="background:var(--papier)"><img src="../assets/brand/logo-vertical.svg" alt="Logo vertical" style="width:min(100%,220px)"><small>Vertical</small></div>
+    <div class="l" style="background:var(--encre)"><img src="../assets/brand/logo-vertical-inverse.svg" alt="Logo vertical, fond sombre" style="width:min(100%,220px)"><small style="color:#fff">Vertical · fond sombre</small></div>
+    <div class="l" style="background:var(--craie)"><img src="../assets/brand/logo-mono.svg" alt="Logo monochrome encre"><small>Monochrome encre</small></div>
+    <div class="l" style="background:var(--signal)"><img src="../assets/brand/logo-mono-blanc.svg" alt="Logo monochrome blanc"><small style="color:#fff">Monochrome blanc · fond signal ou photo</small></div>
   </div>
-  <div class="prose" style="margin-top:1.6rem"><p><b>Zone de protection :</b> autour du logo, un espace libre égal à la hauteur du point rouge. <b>Taille minimale :</b> 24 px de haut à l'écran pour le logo horizontal, 16 px pour le symbole seul ; 8 mm en impression. <b>Favicon et icône d'application :</b> symbole sur carré encre à coins arrondis.</p></div>
-  <div class="dl"><a class="btn btn-ghost btn-sm" href="../assets/brand/logo.svg" download>logo.svg<span class="ico">↓</span></a><a class="btn btn-ghost btn-sm" href="../assets/brand/logo-inverse.svg" download>logo-inverse.svg<span class="ico">↓</span></a><a class="btn btn-ghost btn-sm" href="../assets/brand/mark.svg" download>mark.svg<span class="ico">↓</span></a><a class="btn btn-ghost btn-sm" href="../assets/brand/mark-inverse.svg" download>mark-inverse.svg<span class="ico">↓</span></a><a class="btn btn-ghost btn-sm" href="../assets/brand/favicon.svg" download>favicon.svg<span class="ico">↓</span></a><a class="btn btn-ghost btn-sm" href="../assets/brand/logo-inpi.jpg" download>logo-inpi.jpg (dépôt de marque)<span class="ico">↓</span></a></div>
+  <div class="symb rv d1">
+    <div class="l" style="background:var(--papier)"><img src="../assets/brand/mark.svg" alt="Symbole"><small>Symbole</small></div>
+    <div class="l" style="background:var(--encre)"><img src="../assets/brand/mark-inverse.svg" alt="Symbole inversé"><small style="color:#fff">Fond sombre</small></div>
+    <div class="l" style="background:var(--craie)"><img src="../assets/brand/mark-mono.svg" alt="Symbole monochrome"><small>Monochrome</small></div>
+    <div class="l" style="background:var(--papier)"><img src="../assets/brand/pastille.svg" alt="Pastille carrée"><small>Icône d'application</small></div>
+    <div class="l" style="background:var(--papier)"><img src="../assets/brand/pastille-ronde.svg" alt="Pastille ronde"><small>Avatar</small></div>
+  </div>
+  <div class="split" style="margin-top:2rem;align-items:start">
+    <div class="rv"><div class="zone"><img src="../assets/brand/logo.svg" alt="Zone de protection"></div><p class="muted" style="font-size:.85rem;margin-top:.6rem">Zone de protection : la hauteur du halo du point (soit 27 unités pour un symbole de 64), tout autour.</p></div>
+    <div class="prose rv d1"><p><b>Construction.</b> Le symbole mesure une fois et demie la hauteur des capitales du mot. L'espace entre le symbole et le mot vaut la largeur du point. Le texte est composé en Fraunces 600, optique 72, interlettrage −3 % ; il est <b>vectorisé</b> dans les fichiers SVG, qui s'affichent donc partout sans dépendre des polices installées.</p><p><b>Tailles minimales.</b> Logo horizontal : 24 px à l'écran, 20 mm en impression. Symbole seul : 16 px, 5 mm. En dessous, utiliser le symbole seul ou la pastille.</p><p><b>Sur une photo.</b> Logo inversé sur une zone sombre et calme, monochrome blanc sur une zone colorée, ou pastille. Jamais la version couleur sur une photo claire et chargée.</p><p><b>Favicon et icône d'application.</b> Symbole craie sur carré encre à coins arrondis (16 unités de rayon sur 64), sans halo.</p></div>
+  </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <span class="eyebrow rv"><i></i>03 · Couleurs</span><h2 class="rv d1">Encre, craie, signal.</h2>
-  <div class="sw rv d1">
-    <div style="background:#0B1D33;color:#F7F3EB"><b>Encre</b>#0B1D33 · titres, texte, fonds sombres</div>
-    <div style="background:#06111F;color:#F7F3EB"><b>Nuit</b>#06111F · cartes sombres, pied de page</div>
-    <div style="background:#F7F3EB"><b>Craie</b>#F7F3EB · fond principal</div>
-    <div style="background:#FFFDF9"><b>Papier</b>#FFFDF9 · cartes, formulaires</div>
-    <div style="background:#E4572E;color:#fff"><b>Signal</b>#E4572E · le point du direct, boutons d'action</div>
-    <div style="background:#B8431F;color:#fff"><b>Signal ombre</b>#B8431F · survol, dégradés</div>
-    <div style="background:#1F8A5B;color:#fff"><b>Sur site</b>#1F8A5B · validé, maîtrisé, présent</div>
-    <div style="background:#C9A227;color:#0B1D33"><b>Vigilance</b>#C9A227 · à surveiller</div>
-    <div style="background:#2F6DB5;color:#fff"><b>Bleu plan</b>#2F6DB5 · informations, liens secondaires</div>
-    <div style="background:#6F7681;color:#fff"><b>Ciment</b>#6F7681 · texte secondaire</div>
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>03 · Les interdits</span><h2 class="rv d1">Ce qu'on ne fait <em>jamais</em>.</h2>
+  <div class="non rv d1">
+    <figure><div class="z"><img src="../assets/brand/logo.svg" alt="" style="transform:scaleX(1.35)"></div><figcaption><b>Déformer</b>Ni étirer ni écraser : on redimensionne toujours proportionnellement.</figcaption></figure>
+    <figure><div class="z"><img src="../assets/brand/logo.svg" alt="" style="filter:hue-rotate(150deg) saturate(1.6)"></div><figcaption><b>Recolorer</b>Pas d'autres couleurs que celles de cette charte, pas de dégradé sur le logo.</figcaption></figure>
+    <figure><div class="z"><img src="../assets/brand/logo.svg" alt="" style="transform:rotate(-12deg)"></div><figcaption><b>Incliner</b>Le logo est toujours horizontal (ou vertical, dans sa version prévue).</figcaption></figure>
+    <figure><div class="z"><img src="../assets/brand/logo.svg" alt="" style="filter:drop-shadow(4px 6px 4px rgba(0,0,0,.55))"></div><figcaption><b>Ombrer, contourner</b>Pas d'ombre portée, de contour, de relief ni d'effet.</figcaption></figure>
+    <figure><div class="z"><span style="font:700 26px Arial,Helvetica,sans-serif;color:#0B1D33">Chantier <span style="color:#E4572E">LIVE</span></span></div><figcaption><b>Recomposer</b>On ne retape pas le nom dans une autre police, on ne sépare pas les deux mots, on ne met pas « Live » en capitales.</figcaption></figure>
+    <figure><div class="z" style="background:url('../assets/img/cible_quartier.jpg') center/cover"><img src="../assets/brand/logo.svg" alt=""></div><figcaption><b>Fond chargé</b>Jamais la version couleur sur une photo claire : version inversée sur zone sombre, ou pastille.</figcaption></figure>
   </div>
-  <div class="prose" style="margin-top:1.4rem"><p>Règle d'équilibre : <b>80 % craie et papier, 15 % encre, 5 % signal.</b> Le signal ne sert qu'aux actions principales, au point du logo et aux états critiques. Il n'est jamais utilisé en fond de page ni en texte courant.</p></div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <span class="eyebrow rv"><i></i>04 · Typographies</span><h2 class="rv d1">Fraunces pour dire, Manrope pour faire.</h2>
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>04 · Couleurs</span><h2 class="rv d1">Encre, craie, signal.</h2>
+  <div class="sw rv d1"><div style="background:#0B1D33;color:#F7F3EB"><b>Encre</b><span class="code">#0B1D33 · RVB 11, 29, 51<br>CMJN 78 43 0 80</span>titres, texte, fonds sombres, le symbole</div><div style="background:#06111F;color:#F7F3EB"><b>Nuit</b><span class="code">#06111F · RVB 6, 17, 31<br>CMJN 81 45 0 88</span>cartes sombres, pied de page</div><div style="background:#F7F3EB;color:#0B1D33"><b>Craie</b><span class="code">#F7F3EB · RVB 247, 243, 235<br>CMJN 0 2 5 3</span>fond principal, pages claires</div><div style="background:#FFFDF9;color:#0B1D33"><b>Papier</b><span class="code">#FFFDF9 · RVB 255, 253, 249<br>CMJN 0 1 2 0</span>cartes, formulaires, documents</div><div style="background:#EDE6D8;color:#0B1D33"><b>Sable</b><span class="code">#EDE6D8 · RVB 237, 230, 216<br>CMJN 0 3 9 7</span>séparations, zones secondaires</div><div style="background:#E4572E;color:#FFFFFF"><b>Signal</b><span class="code">#E4572E · RVB 228, 87, 46<br>CMJN 0 62 80 11</span>le point du direct, action principale, mot « Live »</div><div style="background:#B8431F;color:#FFFFFF"><b>Signal ombre</b><span class="code">#B8431F · RVB 184, 67, 31<br>CMJN 0 64 83 28</span>survol, dégradés discrets</div><div style="background:#1F8A5B;color:#FFFFFF"><b>Sur site</b><span class="code">#1F8A5B · RVB 31, 138, 91<br>CMJN 78 0 34 46</span>validé, présent, maîtrisé</div><div style="background:#C9A227;color:#0B1D33"><b>Vigilance</b><span class="code">#C9A227 · RVB 201, 162, 39<br>CMJN 0 19 81 21</span>à surveiller</div><div style="background:#2F6DB5;color:#FFFFFF"><b>Bleu plan</b><span class="code">#2F6DB5 · RVB 47, 109, 181<br>CMJN 74 40 0 29</span>informations, liens secondaires</div><div style="background:#6F7681;color:#FFFFFF"><b>Ciment</b><span class="code">#6F7681 · RVB 111, 118, 129<br>CMJN 14 9 0 49</span>texte secondaire, légendes</div></div>
+  <div class="prose" style="margin-top:1.4rem"><p><b>Règle d'équilibre : 80 % craie et papier, 15 % encre, 5 % signal.</b> Le signal ne sert qu'aux actions principales, au point du logo, au mot « Live » et aux états critiques. Il n'est jamais utilisé en fond de page ni en texte courant. Les couleurs d'état (sur site, vigilance, bleu plan) sont réservées aux indicateurs de l'application et des rapports.</p><p><b>Lisibilité.</b> Encre sur craie et craie sur encre dépassent largement le niveau AAA. Signal sur papier n'atteint que le niveau AA pour les grands textes : le signal porte des titres, des mots clés et des boutons, jamais du texte courant. Sur fond encre, le signal s'éclaircit en <span style="color:#F08A66;font-weight:700">#F08A66</span> pour rester lisible.</p><p><b>Impression.</b> Les valeurs CMJN ci-dessus sont une conversion directe ; demandez à l'imprimeur un bon à tirer sur le papier choisi. Papiers recommandés : non couché 300 à 350 g pour les cartes de visite, couché mat 170 g pour le flyer, couché mat 250 g pour la plaquette.</p></div>
+</div></section>
+
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>05 · Typographies</span><h2 class="rv d1">Fraunces pour dire, Manrope pour faire.</h2>
   <div class="spec rv d1">
-    <div class="s"><div class="big">Votre chantier, <em>en direct.</em></div><p class="muted" style="margin-top:1rem;font-size:.9rem"><b>Fraunces</b> (variable, Google Fonts), graisse 400 à 600, optique 144 pour les titres. L'italique en couleur signal porte le mot clé de chaque titre. Interlettrage resserré de 2,5 %.</p></div>
-    <div class="s"><p style="font-size:1.15rem;font-weight:600">Chaque présence est signée sur place, avec la position, le jour et l'heure.</p><p style="margin-top:.6rem;color:var(--encre-70)">La paie se calcule sur la réalité. Les photos sont horodatées et positionnées, visibles au siège la seconde suivante.</p><p class="muted" style="margin-top:1rem;font-size:.9rem"><b>Manrope</b> (Google Fonts), graisses 500 à 700, pour le texte courant, les interfaces et les tableaux. Dans l'application : Manrope partout, Fraunces réservée aux titres de page et aux grands chiffres.</p></div>
+    <div class="s"><div class="big">Votre chantier, <em>en direct.</em></div><p class="muted" style="margin-top:1rem;font-size:.9rem"><b>Fraunces</b> (variable, Google Fonts), graisse 400 à 600, optique 144 et douceur 20 pour les titres. L'italique en couleur signal (douceur 60) porte le mot clé de chaque titre. Interlettrage resserré de 2,5 %. Jamais de capitales sur un titre.</p></div>
+    <div class="s"><p style="font-size:1.15rem;font-weight:600">Chaque présence est signée sur place, avec la position, le jour et l'heure.</p><p style="margin-top:.6rem;color:var(--encre-70)">La paie se calcule sur la réalité. Les photos sont horodatées et positionnées, visibles au siège la seconde suivante.</p><p class="muted" style="margin-top:1rem;font-size:.9rem"><b>Manrope</b> (Google Fonts), graisses 500 à 700, pour le texte courant, les interfaces, les tableaux et les sur-titres en capitales espacées. Dans l'application : Manrope partout, Fraunces réservée aux titres de page et aux grands chiffres.</p></div>
+  </div>
+  <table class="tab rv d1"><tr><th>Usage</th><th>Police</th><th>Écran</th><th>Imprimé</th></tr>
+    <tr><td>Titre principal</td><td>Fraunces 500, opt. 144</td><td>3,2 à 5 rem</td><td>34 à 44 pt</td></tr>
+    <tr><td>Titre de section</td><td>Fraunces 500</td><td>2 à 2,6 rem</td><td>18 à 20 pt</td></tr>
+    <tr><td>Sous-titre, carte</td><td>Fraunces 500 ou Manrope 700</td><td>1,1 à 1,3 rem</td><td>11 à 13 pt</td></tr>
+    <tr><td>Texte courant</td><td>Manrope 500</td><td>1 à 1,06 rem</td><td>9 à 10 pt</td></tr>
+    <tr><td>Sur-titre, légende</td><td>Manrope 700, capitales, interlettrage 0,2 em</td><td>0,68 rem</td><td>7 pt</td></tr>
+    <tr><td>Sans Fraunces ni Manrope (Word, PowerPoint, e-mail)</td><td colspan="3">Georgia pour les titres, Arial ou Helvetica pour le texte. Mieux : installer les deux polices, gratuites, depuis <a href="https://fonts.google.com/specimen/Fraunces" target="_blank" rel="noopener">fonts.google.com/specimen/Fraunces</a> et <a href="https://fonts.google.com/specimen/Manrope" target="_blank" rel="noopener">fonts.google.com/specimen/Manrope</a>.</td></tr>
+  </table>
+</div></section>
+
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>06 · Images et icônes</span><h2 class="rv d1">Le terrain, <em>vraiment</em>.</h2>
+  <div class="gal rv d1"><img src="../assets/img/chantier_controle.jpg" alt="Contrôle sur chantier"><img src="../assets/img/site_aerien.jpg" alt="Vue aérienne d'un site"><img src="../assets/img/chantier_prefab.jpg" alt="Préfabrication"></div>
+  <div class="dont rv d1">
+    <div><b>Des photos de chantier réelles</b>Lumière naturelle, personnes au travail, casques et gilets, matériaux, plans. Jamais de poignée de main, de bureau vitré ni d'image de banque générique.</div>
+    <div><b>Les captures d'écran dans le double cadre</b>Toujours posées dans le cadre à deux niveaux, légèrement inclinées sur les couvertures, droites dans les pages intérieures.</div>
+    <div><b>Un voile encre sur les photos avec texte</b>Dégradé du transparent vers l'encre à 90 %, texte craie dessus. Jamais de texte directement sur une photo claire.</div>
+    <div><b>Des icônes au trait</b>Trait de 1,6 px, bouts et angles arrondis, une seule couleur (encre ou craie). Pas d'icônes pleines, colorées ou en 3D.</div>
+    <div><b>Le point signal comme repère</b>Puces, sur-titres et états « en direct » utilisent le point signal, avec son halo léger.</div>
+    <div><b>Pas de décor</b>Pas de formes abstraites, de vagues, de dégradés violets ni de « personnages » illustrés. Le décor, c'est le chantier.</div>
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <span class="eyebrow rv"><i></i>05 · Ton</span><h2 class="rv d1">Précis, direct, <em>sans jargon</em>.</h2>
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>07 · Ton et vocabulaire</span><h2 class="rv d1">Précis, direct, <em>sans jargon</em>.</h2>
   <div class="dont rv d1">
     <div><b>On dit</b>« Chaque présence est signée sur place. » Des phrases courtes, des faits, des verbes.</div>
     <div><b>On ne dit pas</b>« Une solution innovante de digitalisation. » Pas de superlatifs, pas d'anglicismes inutiles, pas de promesses vagues.</div>
     <div><b>On chiffre</b>« Six paramètres », « sous 24 heures », « 165 hectares ». Un chiffre vaut mieux qu'un adjectif.</div>
     <div><b>On vouvoie</b>le client, on nomme ses équipes « vos chefs d'équipe », « vos agents ». On parle de chantier, de programme, de terrain.</div>
     <div><b>On est bilingue</b>Français d'abord, anglais ensuite. Les documents juridiques font foi en français.</div>
-    <div><b>On signe</b>« ChantierLive, une marque de Paul Mirabeau Byande, exploitée sous licence par LevENT-IT et ETS 2BY Consulting. »</div>
+    <div><b>On signe</b>« ChantierLive est une marque de Paul Mirabeau Byande, exploitée sous licence par LevENT-IT (France) et ETS 2BY Consulting (Cameroun). »</div>
+  </div>
+  <div class="lex rv d1">
+    <div class="ok"><b>Lexique de la marque</b><ul><li><b>Chantier</b> (l'opération suivie), <b>programme</b> (l'ensemble des chantiers d'un client), <b>espace</b> (le compte client).</li><li><b>Pointage</b> et <b>émargement</b> ; <b>chef d'équipe</b> ; <b>agent</b> (personne pointée).</li><li><b>Cockpit</b>, <b>six paramètres de réussite</b>, <b>alerte</b>.</li><li><b>Contrat</b>, <b>devis</b>, <b>compte</b> (par personne), <b>rôle</b>, <b>titre</b>.</li><li><b>Plans et documents</b>, <b>rapport de chantier</b>, <b>feuille de présence</b>.</li></ul></div>
+    <div class="ko"><b>On évite</b><ul><li>« Solution », « plateforme digitale », « disruptif », « innovant ».</li><li>« Abonnement », « licence utilisateur », « plan » : on parle de contrat et de comptes.</li><li>« Projet » pour désigner un chantier ; « ouvrier » dans l'interface (on dit agent).</li><li>« Chantier Live », « ChantierLIVE », « CL » dans un texte.</li><li>Les points d'exclamation et les émojis dans les documents.</li></ul></div>
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <span class="eyebrow rv"><i></i>06 · Composants</span><h2 class="rv d1">Ce qui rend la marque reconnaissable à l'écran.</h2>
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>08 · Composants</span><h2 class="rv d1">Ce qui rend la marque reconnaissable à l'écran.</h2>
   <div class="dont rv d1">
     <div><b>Le double cadre</b>Les captures et les cartes importantes sont posées dans un cadre à deux niveaux (enveloppe translucide, cœur papier), jamais à plat.</div>
     <div><b>Le bouton pilule</b>Boutons entièrement arrondis, icône de flèche dans sa propre pastille à droite. Signal pour l'action principale, encre pour la secondaire.</div>
-    <div><b>Le sur-titre</b>Petit badge en capitales espacées, précédé d'un point signal, avant chaque titre de section.</div>
-    <div><b>Le grain</b>Un très léger grain de papier (3,5 %) sur l'ensemble du site. Pas de dégradés violents, pas d'ombres noires.</div>
+    <div><b>Le sur-titre</b>Petit badge en capitales espacées, précédé d'un point signal, avant chaque titre de section. Numéroté dans les documents imprimés.</div>
+    <div><b>Le grain</b>Un très léger grain de papier (3,5 à 5 %) sur les fonds. Pas de dégradés violents, pas d'ombres noires.</div>
     <div><b>Le mouvement</b>Les éléments apparaissent en fondu montant, avec une courbe douce. Rien n'apparaît brutalement, rien ne clignote sauf le point du direct.</div>
-    <div><b>Les interdits</b>Pas de Inter, Roboto ni Arial. Pas d'icônes épaisses. Pas de bordures grises à 1 px. Pas de capitales sur les titres.</div>
+    <div><b>Les interdits</b>Pas de Inter, Roboto ni Arial à l'écran. Pas d'icônes épaisses. Pas de bordures grises à 1 px. Pas de capitales sur les titres.</div>
   </div>
+</div></section>
+
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>09 · Supports de communication</span><h2 class="rv d1">Prêts à imprimer, <em>prêts à envoyer</em>.</h2>
+  <p class="lead rv d2" style="margin-top:1rem">Chaque support existe en page web (modifiable, imprimable depuis le navigateur) et en PDF. La version « fond perdu » ajoute 3 mm de débord sur chaque côté, comme le demandent les imprimeurs.</p>
+  <div class="apps rv d1">
+    <article class="card"><div class="im"><img src="kit/apercu-plaquette-1.jpg" alt="Plaquette, couverture"></div><div class="tx"><span class="n">Plaquette A4 · 4 pages</span><h3>La présentation complète</h3><p>Couverture, constat et fonctionnement, modules et rôles, offre et démarrage. À remettre en rendez-vous, à joindre à un devis.</p><a class="btn btn-ghost btn-sm" href="kit/Plaquette_ChantierLive.pdf">PDF<span class="ico">↓</span></a> <a class="btn btn-ghost btn-sm" href="plaquette.html">Page</a></div></article>
+    <article class="card"><div class="im"><img src="kit/apercu-flyer-1.jpg" alt="Flyer, recto"></div><div class="tx"><span class="n">Flyer A5 · recto verso</span><h3>L'essentiel en main</h3><p>Pour les salons, les visites de chantier et les boîtes aux lettres des promoteurs. QR code vers la demande de démonstration.</p><a class="btn btn-ghost btn-sm" href="kit/Flyer_ChantierLive.pdf">PDF<span class="ico">↓</span></a> <a class="btn btn-ghost btn-sm" href="flyer.html">Page</a></div></article>
+    <article class="card"><div class="im"><img src="kit/apercu-carte-2.jpg" alt="Carte de visite, verso"></div><div class="tx"><span class="n">Carte de visite · 85 × 55 mm</span><h3>Recto encre, verso papier</h3><p>Personnalisable par l'adresse de la page : <code style="font-size:.8rem">carte.html?nom=…&amp;titre=…&amp;tel=…&amp;mail=…</code>, puis « imprimer / PDF ».</p><a class="btn btn-ghost btn-sm" href="kit/Carte_de_visite_ChantierLive.pdf">PDF<span class="ico">↓</span></a> <a class="btn btn-ghost btn-sm" href="carte.html">Page</a></div></article>
+    <article class="card"><div class="im"><img src="kit/banniere-linkedin-1584x396.png" alt="Bannière LinkedIn"></div><div class="tx"><span class="n">Réseaux sociaux</span><h3>Avatar, bannière, publications</h3><p>Avatar 1024, bannière LinkedIn 1584 × 396, image de partage 1200 × 630 et trois publications carrées à décliner.</p><a class="btn btn-ghost btn-sm" href="reseaux.html">Voir et décliner</a></div></article>
+    <article class="card"><div class="im"><img src="../assets/brand/logo-email.png" alt="Signature e-mail" style="width:220px;box-shadow:none"></div><div class="tx"><span class="n">Signature e-mail</span><h3>Même signature pour tous</h3><p>Nom, fonction, téléphone, e-mail : la page génère le code et la copie dans Gmail, Outlook ou Apple Mail.</p><a class="btn btn-ghost btn-sm" href="signature.html">Générer ma signature</a></div></article>
+    <article class="card"><div class="im"><img src="../docs/../assets/img/app-cockpit.jpg" alt="Présentations"></div><div class="tx"><span class="n">Présentations et documents</span><h3>Diapositives, devis, Word</h3><p>Couverture encre avec logo inversé et titre Fraunces ; pages intérieures craie, titres encre avec un mot signal en italique ; une idée par diapositive ; captures dans le double cadre ; pied de page « chantierlive.com » et numéro. Devis et courriers : en-tête logo 40 mm, Georgia pour les titres si Fraunces n'est pas installée.</p></div></article>
+  </div>
+  <div class="gal rv d1" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))"><img src="kit/publication-1-1080.png" alt="Publication 1"><img src="kit/publication-2-1080.png" alt="Publication 2"><img src="kit/publication-3-1080.png" alt="Publication 3"><img src="kit/partage-1200x630.png" alt="Image de partage"></div>
+</div></section>
+
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>10 · Fichiers</span><h2 class="rv d1">Tout le kit, <em>à télécharger</em>.</h2>
+  <div class="dl rv d1"><a class="btn btn-primary btn-sm" href="kit/Kit_marque_ChantierLive.zip">Kit complet (ZIP : logos, PDF, visuels)<span class="ico">↓</span></a></div>
+  <table class="tab rv d1"><tr><th>Logo</th><th>Vectoriel</th><th>Image</th></tr><tr><td>Logo horizontal, couleur (fond clair)</td><td><a href="../assets/brand/logo.svg" download>SVG</a></td><td><a href="../assets/brand/logo.png" download>PNG</a></td></tr><tr><td>Logo horizontal, fond sombre</td><td><a href="../assets/brand/logo-inverse.svg" download>SVG</a></td><td><a href="../assets/brand/logo-inverse.png" download>PNG</a></td></tr><tr><td>Logo horizontal, monochrome encre</td><td><a href="../assets/brand/logo-mono.svg" download>SVG</a></td><td><a href="../assets/brand/logo-mono.png" download>PNG</a></td></tr><tr><td>Logo horizontal, monochrome blanc</td><td><a href="../assets/brand/logo-mono-blanc.svg" download>SVG</a></td><td><a href="../assets/brand/logo-mono-blanc.png" download>PNG</a></td></tr><tr><td>Logo vertical, couleur</td><td><a href="../assets/brand/logo-vertical.svg" download>SVG</a></td><td><a href="../assets/brand/logo-vertical.png" download>PNG</a></td></tr><tr><td>Logo vertical, fond sombre</td><td><a href="../assets/brand/logo-vertical-inverse.svg" download>SVG</a></td><td><a href="../assets/brand/logo-vertical-inverse.png" download>PNG</a></td></tr><tr><td>Mot seul</td><td><a href="../assets/brand/wordmark.svg" download>SVG</a></td><td><a href="../assets/brand/wordmark.png" download>PNG</a></td></tr><tr><td>Mot seul, fond sombre</td><td><a href="../assets/brand/wordmark-inverse.svg" download>SVG</a></td><td><a href="../assets/brand/wordmark-inverse.png" download>PNG</a></td></tr><tr><td>Symbole</td><td><a href="../assets/brand/mark.svg" download>SVG</a></td><td><a href="../assets/brand/mark.png" download>PNG</a></td></tr><tr><td>Symbole, fond sombre</td><td><a href="../assets/brand/mark-inverse.svg" download>SVG</a></td><td><a href="../assets/brand/mark-inverse.png" download>PNG</a></td></tr><tr><td>Symbole monochrome</td><td><a href="../assets/brand/mark-mono.svg" download>SVG</a></td><td><a href="../assets/brand/mark-mono.png" download>PNG</a></td></tr><tr><td>Pastille carrée (icône, avatar)</td><td><a href="../assets/brand/pastille.svg" download>SVG</a></td><td><a href="../assets/brand/pastille.png" download>PNG</a></td></tr><tr><td>Pastille ronde (avatar)</td><td><a href="../assets/brand/pastille-ronde.svg" download>SVG</a></td><td><a href="../assets/brand/pastille-ronde.png" download>PNG</a></td></tr><tr><td>Favicon</td><td><a href="../assets/brand/favicon.svg" download>SVG</a></td><td><span class="muted">—</span></td></tr><tr><td>Logo pour signature e-mail (450 px)</td><td><span class="muted">—</span></td><td><a href="../assets/brand/logo-email.png" download>PNG</a></td></tr><tr><td>Dépôt de marque (INPI)</td><td><span class="muted">—</span></td><td><a href="../assets/brand/logo-inpi.jpg" download>JPG</a></td></tr></table>
+  <table class="tab rv d1"><tr><th>Document</th><th>PDF</th><th>Imprimeur</th><th>Modifiable</th></tr><tr><td>Charte graphique (ce document)</td><td><a href="Charte_ChantierLive.pdf">PDF</a></td><td><span class="muted">—</span></td><td><a href="index.html">page</a></td></tr><tr><td>Plaquette A4, 4 pages</td><td><a href="kit/Plaquette_ChantierLive.pdf">PDF</a></td><td><a href="kit/Plaquette_ChantierLive_imprimeur_fond_perdu.pdf" download>PDF fond perdu 3 mm</a></td><td><a href="plaquette.html">page</a></td></tr><tr><td>Flyer A5, recto verso</td><td><a href="kit/Flyer_ChantierLive.pdf">PDF</a></td><td><a href="kit/Flyer_ChantierLive_imprimeur_fond_perdu.pdf" download>PDF fond perdu 3 mm</a></td><td><a href="flyer.html">page</a></td></tr><tr><td>Carte de visite 85 × 55 mm</td><td><a href="kit/Carte_de_visite_ChantierLive.pdf">PDF</a></td><td><a href="kit/Carte_de_visite_ChantierLive_imprimeur_fond_perdu.pdf" download>PDF fond perdu 3 mm</a></td><td><a href="carte.html">page</a></td></tr><tr><td>Fiche de prise en main du promoteur</td><td><a href="../docs/Fiche_promoteur_ChantierLive.pdf">PDF</a></td><td><span class="muted">—</span></td><td><a href="../docs/fiche-promoteur.html">page</a></td></tr></table>
+  <table class="tab rv d1"><tr><th>Visuel</th><th>Fichier</th></tr><tr><td>Avatar 1024 × 1024</td><td><a href="kit/avatar-1024.png" download>PNG</a></td></tr><tr><td>Bannière LinkedIn 1584 × 396</td><td><a href="kit/banniere-linkedin-1584x396.png" download>PNG</a></td></tr><tr><td>Image de partage 1200 × 630</td><td><a href="kit/partage-1200x630.png" download>PNG</a></td></tr><tr><td>Publication 1</td><td><a href="kit/publication-1-1080.png" download>PNG</a></td></tr><tr><td>Publication 2</td><td><a href="kit/publication-2-1080.png" download>PNG</a></td></tr><tr><td>Publication 3</td><td><a href="kit/publication-3-1080.png" download>PNG</a></td></tr></table>
+  <p class="muted" style="margin-top:1rem;font-size:.9rem">Le SVG est le format à donner aux imprimeurs, aux graphistes et aux développeurs ; le PNG (fond transparent, 2 400 px de large) sert dans Word, PowerPoint, Canva et les messageries.</p>
+</div></section>
+
+<section><div class="wrap">
+  <span class="eyebrow rv"><i></i>11 · Propriété et usage</span><h2 class="rv d1">Qui peut utiliser la marque.</h2>
+  <div class="prose rv d1"><p>ChantierLive, son nom et son symbole sont une marque de Paul Mirabeau Byande, déposée (INPI), exploitée sous licence par LevENT-IT (France) et par ETS 2BY Consulting, représentant local de LevENT-IT au Cameroun. Les clients sous contrat peuvent mentionner « suivi de chantier par ChantierLive » et utiliser le logo pour désigner l'outil, sans le modifier. Les partenaires et la presse utilisent les fichiers de cette page tels quels. Toute autre utilisation, et toute question sur la marque : <a href="mailto:contact@chantierlive.com" style="color:var(--signal)">contact@chantierlive.com</a>.</p></div>
 </div></section>
 
 <script src="../assets/js/site.js" data-base="../" data-lang="fr" data-page="marque"></script>

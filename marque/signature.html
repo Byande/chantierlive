@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Signature e-mail ChantierLive</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400..600,0..100&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin-top:1.4rem}
+.form label{display:grid;gap:.3rem;font-size:.82rem;font-weight:600;color:var(--encre-70)}
+.form input{font:inherit;font-size:1rem;padding:.7rem .9rem;border-radius:var(--r-sm);border:0;box-shadow:inset 0 0 0 1px var(--hair-2);background:#fff;color:var(--encre)}
+.apercu{margin-top:1.6rem;padding:2rem;border-radius:var(--r-lg);background:#fff;box-shadow:inset 0 0 0 1px var(--hair)}
+textarea{width:100%;min-height:200px;font:12px/1.5 ui-monospace,Menlo,monospace;padding:1rem;border-radius:var(--r-md);border:0;box-shadow:inset 0 0 0 1px var(--hair-2);background:#fff;margin-top:1rem;color:var(--encre)}
+.ok{color:var(--sur-site);font-weight:600;margin-left:.8rem}
+</style>
+</head>
+<body>
+<header class="page-head"><div class="wrap"><span class="eyebrow rv"><i></i>Marque et communication</span><h1 class="rv d1">Signature <em>e-mail</em>.</h1><p class="lead rv d2">Renseignez vos coordonnées, copiez le code HTML et collez-le dans les réglages de signature de votre messagerie (Gmail : Paramètres → Signature ; Outlook : Options → Signatures ; Apple Mail : copier l'aperçu directement). Le logo est chargé depuis chantierlive.com.</p></div></header>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="form">
+    <label>Nom<input id="nom" value="Dr Paul Mirabeau Byande"></label>
+    <label>Fonction<input id="titre" value="Fondateur · Directeur de programmes"></label>
+    <label>Téléphone / WhatsApp<input id="tel" value="+237 6 50 15 74 61"></label>
+    <label>E-mail<input id="mail" value="contact@chantierlive.com"></label>
+    <label>Villes<input id="villes" value="Paris · Douala · Conakry"></label>
+  </div>
+  <div class="apercu" id="apercu"></div>
+  <div style="margin-top:1rem"><button class="btn btn-primary btn-sm" id="copier">Copier la signature (pour coller dans Gmail, Outlook, Apple Mail)</button><button class="btn btn-ghost btn-sm" id="copierHtml" style="margin-left:.6rem">Copier le code HTML</button><span class="ok" id="ok"></span></div>
+  <textarea id="code" readonly></textarea>
+</div></section>
+
+<script>
+(function(){
+  var ids=['nom','titre','tel','mail','villes'], q=new URLSearchParams(location.search);
+  ids.forEach(function(i){ if(q.get(i)) document.getElementById(i).value=q.get(i); });
+  function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function rendu(){
+    var v={}; ids.forEach(function(i){ v[i]=document.getElementById(i).value.trim(); });
+    var telHref='tel:'+v.tel.replace(/[^+\d]/g,'');
+    var html=
+'<table cellpadding="0" cellspacing="0" border="0" style="font-family:Manrope,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.5;color:#0B1D33;border-collapse:collapse">'+
+'<tr><td style="padding:0 16px 0 0;vertical-align:top;border-right:2px solid #E4572E"><a href="https://chantierlive.com" style="text-decoration:none"><img src="https://chantierlive.com/assets/brand/logo-email.png" width="150" height="33" alt="ChantierLive" style="display:block;border:0;width:150px;height:auto"></a></td>'+
+'<td style="padding:0 0 0 16px;vertical-align:top">'+
+'<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:16px;color:#0B1D33">'+h(v.nom)+'</div>'+
+'<div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:700;color:#E4572E;margin:2px 0 6px">'+h(v.titre)+'</div>'+
+'<div><a href="'+telHref+'" style="color:#0B1D33;text-decoration:none">'+h(v.tel)+'</a> &nbsp;·&nbsp; <a href="mailto:'+h(v.mail)+'" style="color:#0B1D33;text-decoration:none">'+h(v.mail)+'</a></div>'+
+'<div><a href="https://chantierlive.com" style="color:#0B1D33;font-weight:700;text-decoration:none">chantierlive.com</a> &nbsp;·&nbsp; <span style="color:#6F7681">'+h(v.villes)+'</span></div>'+
+'</td></tr>'+
+'<tr><td colspan="2" style="padding:12px 0 0;font-size:11px;color:#6F7681">Votre chantier, en direct. ChantierLive est une marque de Paul Mirabeau Byande, exploitée sous licence par LevENT-IT et ETS 2BY Consulting.</td></tr>'+
+'</table>';
+    document.getElementById('apercu').innerHTML=html; document.getElementById('code').value=html;
+  }
+  ids.forEach(function(i){ document.getElementById(i).addEventListener('input',rendu); });
+  rendu();
+  document.getElementById('copierHtml').onclick=function(){ navigator.clipboard.writeText(document.getElementById('code').value).then(function(){ document.getElementById('ok').textContent='Code copié.'; }); };
+  document.getElementById('copier').onclick=function(){
+    var ap=document.getElementById('apercu'), r=document.createRange(); r.selectNodeContents(ap);
+    var sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    try{ document.execCommand('copy'); document.getElementById('ok').textContent='Signature copiée : collez-la dans votre messagerie.'; }catch(e){ document.getElementById('ok').textContent='Sélectionnez l\'aperçu et copiez-le (Ctrl/Cmd + C).'; }
+    sel.removeAllRanges();
+  };
+})();
+</script>
+<script src="../assets/js/site.js" data-base="../" data-lang="fr" data-page="marque"></script>
+</body></html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr" data-w="148" data-h="210" data-titre="Flyer ChantierLive (A5, recto verso)">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flyer ChantierLive — Votre chantier, en direct</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400..600,0..100&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kit.css">
+<script src="kit.js"></script>
+<style>
+:root{--marge:11mm}
+body{font-size:8.8pt}
+.recto .logo{width:46mm}
+.recto h1{font-size:30pt;margin-top:12mm;max-width:118mm}
+.recto .lead{font-size:10pt;margin-top:4mm;max-width:112mm}
+.recto .atouts{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-top:7mm}
+.recto .atouts div{padding:3.5mm 4mm;border-radius:3.5mm;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 .3mm rgba(255,255,255,.14)}
+.recto .atouts b{display:block;font-family:var(--serif);font-weight:500;font-size:11.5pt;letter-spacing:-.01em;margin-bottom:1mm}
+.recto .atouts p{color:rgba(247,243,235,.75);font-size:8.2pt;line-height:1.4}
+.recto .tel{position:absolute;right:-7mm;bottom:-42mm;width:54mm;transform:rotate(-6deg)}
+.recto .tel .core img{display:block;width:100%}
+.recto .bas{position:absolute;left:var(--marge);bottom:var(--marge);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:rgba(247,243,235,.7)}
+.verso h2{font-size:17pt}
+.verso .etapes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2.5mm;margin-top:3.5mm}
+.verso .etapes div{padding:3.2mm 3.4mm;border-radius:3.2mm;background:#fff;box-shadow:inset 0 0 0 .3mm var(--hair)}
+.verso .etapes b{display:block;font-size:8.8pt;margin:.5mm 0 1mm}
+.verso .etapes p{font-size:7.8pt;color:rgba(11,29,51,.72);line-height:1.38}
+.verso .pour{display:grid;grid-template-columns:1fr 1fr;gap:2.5mm 5mm;margin-top:3.5mm;font-size:8.3pt}
+.verso .pour div{padding-left:4.5mm;position:relative}.verso .pour div::before{content:"";position:absolute;left:0;top:1.6mm;width:2.4mm;height:2.4mm;border-radius:50%;background:var(--signal)}
+.verso .offre{margin-top:5mm;padding:4mm 4.5mm;border-radius:3.5mm;background:#fff;box-shadow:inset 0 0 0 .3mm var(--hair);font-size:8.3pt}
+.verso .offre b.t{font-family:var(--serif);font-weight:500;font-size:11.5pt;display:block;letter-spacing:-.01em;margin-bottom:1.5mm}
+.verso .contact{margin-top:auto;display:grid;grid-template-columns:1fr auto;gap:5mm;align-items:center;padding:4.5mm 5mm;border-radius:3.5mm;background:var(--encre);color:var(--craie)}
+.verso .contact b{font-family:var(--serif);font-weight:500;font-size:12.5pt;display:block;letter-spacing:-.01em;margin-bottom:1mm}
+.verso .contact p{font-size:8.4pt;line-height:1.55}
+.verso .contact .qr{width:20mm;height:20mm;background:#fff;padding:1.6mm;border-radius:2mm}
+.verso .legal{margin-top:3mm;font-size:6.3pt;color:var(--ciment);line-height:1.35}
+.sec{margin-top:4mm}
+.verso .photo{position:relative;margin-top:4.5mm;height:30mm;border-radius:3.5mm;overflow:hidden}.verso .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block}.verso .photo span{position:absolute;left:0;right:0;bottom:0;padding:6mm 4mm 2.6mm;color:#fff;font-size:7.6pt;font-weight:700;background:linear-gradient(transparent,rgba(6,17,31,.85))}
+</style>
+</head>
+<body>
+
+<!-- Recto -->
+<section class="page dark recto">
+  <div class="grain"></div>
+  <div class="in">
+    <img class="logo" src="../assets/brand/logo-inverse.svg" alt="ChantierLive">
+    <h1>Votre chantier, <em>en direct</em>.</h1>
+    <p class="lead">Présences signées, photos horodatées, livraisons, coûts et délais : ce qui se passe réellement sur le terrain, sur un seul écran, à la seconde.</p>
+    <div class="atouts">
+      <div><b>Pointage signé</b><p>Chaque agent signe du doigt sur le téléphone du chef d'équipe. Position, heure, signature : inaltérables.</p></div>
+      <div><b>Photos datées</b><p>Horodatées, géolocalisées, classées par chantier et par zone. Votre preuve à chaque étape clé.</p></div>
+      <div><b>Cockpit à six paramètres</b><p>Délai, coût, périmètre, qualité, risques, bénéfices, recalculés à chaque saisie.</p></div>
+      <div><b>Alertes avant la dérive</b><p>Livraison en retard, stock sous le seuil, non-conformité, pointage hors site : par e-mail et WhatsApp.</p></div>
+    </div>
+    <div class="bas">chantierlive.com</div>
+  </div>
+  <div class="tel bezel sombre"><div class="core"><img src="../assets/img/mobile-pointage.jpg" alt="Pointage sur téléphone"></div></div>
+</section>
+
+<!-- Verso -->
+<section class="page craie verso">
+  <div class="in">
+    <span class="eyebrow"><i></i>Comment ça marche</span>
+    <h2>Un téléphone sur le terrain, <em>un écran</em> au bureau.</h2>
+    <div class="etapes">
+      <div><span class="n">1</span><b>Sur le chantier</b><p>Le chef d'équipe pointe, photographie, note. Les ouvriers n'ont pas de compte. Sans réseau, tout est conservé puis envoyé.</p></div>
+      <div><span class="n">2</span><b>Au siège</b><p>Le cockpit recalcule en continu. Budget, achats et stocks, effectif et paie, plans et documents, journal de chantier.</p></div>
+      <div><span class="n">3</span><b>Avant la dérive</b><p>Les alertes vous trouvent dans l'application, par e-mail, par WhatsApp. Rapports PDF et exports Excel à tout moment.</p></div>
+    </div>
+
+    <div class="sec"><span class="eyebrow"><i></i>Pour qui</span>
+    <div class="pour">
+      <div><b>Promoteurs et maîtres d'ouvrage</b> : un programme, plusieurs chantiers, une vue.</div>
+      <div><b>Directions de programme</b> : six paramètres, un reporting prêt chaque semaine.</div>
+      <div><b>Entreprises de construction</b> : présences, paie, stocks, sous-traitants.</div>
+      <div><b>Banques et investisseurs</b> : un accès en lecture seule sur l'avancement réel.</div>
+    </div></div>
+
+    <div class="photo"><img src="../assets/img/chantier_controle.jpg" alt="Sur le chantier"><span>Née sur un programme immobilier réel de 165 hectares, piloté en Guinée.</span></div>
+    <div class="offre"><b class="t">Un contrat clair, sur devis.</b>Tous les modules, le nombre de chantiers et de comptes dont vous avez besoin, l'ouverture de votre espace, la formation de démarrage, l'assistance, les mises à jour et l'hébergement européen. Paiement par virement ou mobile money, sur facture. Dix-neuf rôles, un accès par chantier, vos exports à tout moment.</div>
+
+    <div class="contact">
+      <div><b>Demandez une démonstration.</b><p>contact@chantierlive.com · WhatsApp +237 6 50 15 74 61<br>chantierlive.com/demo · Paris · Douala · Conakry</p></div>
+      <img class="qr" src="kit/qr-demo.svg" alt="QR code : chantierlive.com/demo">
+    </div>
+    <p class="legal">ChantierLive est une marque de Paul Mirabeau Byande, exploitée sous licence par LevENT-IT (France) et ETS 2BY Consulting (Cameroun). Données hébergées dans l'Union européenne.</p>
+  </div>
+</section>
+</body></html>
