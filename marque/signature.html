@@ -19,14 +19,16 @@ textarea{width:100%;min-height:200px;font:12px/1.5 ui-monospace,Menlo,monospace;
 </style>
 </head>
 <body>
-<header class="page-head"><div class="wrap"><span class="eyebrow rv"><i></i>Marque et communication</span><h1 class="rv d1">Signature <em>e-mail</em>.</h1><p class="lead rv d2">Renseignez vos coordonnées, copiez le code HTML et collez-le dans les réglages de signature de votre messagerie (Gmail : Paramètres → Signature ; Outlook : Options → Signatures ; Apple Mail : copier l'aperçu directement). Le logo est chargé depuis chantierlive.com.</p></div></header>
+<header class="page-head"><div class="wrap"><span class="eyebrow"><i></i>Marque et communication</span><h1>Signature <em>e-mail</em>.</h1><p class="lead">Renseignez vos coordonnées, copiez le code HTML et collez-le dans les réglages de signature de votre messagerie (Gmail : Paramètres → Signature ; Outlook : Options → Signatures ; Apple Mail : copier l'aperçu directement). Le logo est chargé depuis chantierlive.com.</p></div></header>
 
 <section style="padding-top:0"><div class="wrap">
   <div class="form">
     <label>Nom<input id="nom" value="Dr Paul Mirabeau Byande"></label>
-    <label>Fonction<input id="titre" value="Fondateur · Directeur de programmes"></label>
-    <label>Téléphone / WhatsApp<input id="tel" value="+237 6 50 15 74 61"></label>
+    <label>Fonction<input id="titre" value="Directeur de programmes"></label>
+    <label>Téléphone<input id="tel" value="+33 6 29 76 39 65"></label>
+    <label>WhatsApp<input id="wa" value="+237 6 50 15 74 61"></label>
     <label>E-mail<input id="mail" value="contact@chantierlive.com"></label>
+    <label>Second e-mail (facultatif)<input id="mail2" value="paulbyande@levent-it.com"></label>
     <label>Villes<input id="villes" value="Paris · Douala · Conakry"></label>
   </div>
   <div class="apercu" id="apercu"></div>
@@ -36,19 +38,21 @@ textarea{width:100%;min-height:200px;font:12px/1.5 ui-monospace,Menlo,monospace;
 
 <script>
 (function(){
-  var ids=['nom','titre','tel','mail','villes'], q=new URLSearchParams(location.search);
+  var ids=['nom','titre','tel','wa','mail','mail2','villes'], q=new URLSearchParams(location.search);
   ids.forEach(function(i){ if(q.get(i)) document.getElementById(i).value=q.get(i); });
   function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function rendu(){
     var v={}; ids.forEach(function(i){ v[i]=document.getElementById(i).value.trim(); });
-    var telHref='tel:'+v.tel.replace(/[^+\d]/g,'');
+    var telHref='tel:'+v.tel.replace(/[^+\d]/g,''), waHref='https://wa.me/'+v.wa.replace(/[^\d]/g,'');
+    var ligneTel=h(v.tel)+(v.wa?' &nbsp;·&nbsp; WhatsApp <a href="'+waHref+'" style="color:#0B1D33;text-decoration:none">'+h(v.wa)+'</a>':'');
+    var ligneMail='<a href="mailto:'+h(v.mail)+'" style="color:#0B1D33;text-decoration:none">'+h(v.mail)+'</a>'+(v.mail2?' &nbsp;·&nbsp; <a href="mailto:'+h(v.mail2)+'" style="color:#0B1D33;text-decoration:none">'+h(v.mail2)+'</a>':'');
     var html=
 '<table cellpadding="0" cellspacing="0" border="0" style="font-family:Manrope,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.5;color:#0B1D33;border-collapse:collapse">'+
 '<tr><td style="padding:0 16px 0 0;vertical-align:top;border-right:2px solid #E4572E"><a href="https://chantierlive.com" style="text-decoration:none"><img src="https://chantierlive.com/assets/brand/logo-email.png" width="150" height="33" alt="ChantierLive" style="display:block;border:0;width:150px;height:auto"></a></td>'+
 '<td style="padding:0 0 0 16px;vertical-align:top">'+
 '<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:16px;color:#0B1D33">'+h(v.nom)+'</div>'+
 '<div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:700;color:#E4572E;margin:2px 0 6px">'+h(v.titre)+'</div>'+
-'<div><a href="'+telHref+'" style="color:#0B1D33;text-decoration:none">'+h(v.tel)+'</a> &nbsp;·&nbsp; <a href="mailto:'+h(v.mail)+'" style="color:#0B1D33;text-decoration:none">'+h(v.mail)+'</a></div>'+
+'<div><a href="'+telHref+'" style="color:#0B1D33;text-decoration:none">'+ligneTel+'</a></div><div>'+ligneMail+'</div>'+
 '<div><a href="https://chantierlive.com" style="color:#0B1D33;font-weight:700;text-decoration:none">chantierlive.com</a> &nbsp;·&nbsp; <span style="color:#6F7681">'+h(v.villes)+'</span></div>'+
 '</td></tr>'+
 '<tr><td colspan="2" style="padding:12px 0 0;font-size:11px;color:#6F7681">Votre chantier, en direct. ChantierLive est une marque de Paul Mirabeau Byande, exploitée sous licence par LevENT-IT et ETS 2BY Consulting.</td></tr>'+

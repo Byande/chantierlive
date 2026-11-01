@@ -12,7 +12,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('[data-champ]').forEach(function (el) {
       var v = q.get(el.dataset.champ);
-      if (v !== null) { if (el.tagName === 'A' && el.dataset.href) el.setAttribute('href', el.dataset.href + v); el.textContent = v; }
+      if (v !== null) { if (el.tagName === 'A' && el.dataset.href) el.setAttribute('href', el.dataset.href + v); el.textContent = v; if (v === '') { var s = el.closest('span.muted') || el; s.style.display = 'none'; } }
     });
     if (!q.has('nu')) {
       var b = document.createElement('div'); b.className = 'barre';
