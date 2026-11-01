@@ -39,13 +39,14 @@
       <p class="liens"><button class="btn lien" type="button" id="btnLienMagique">Recevoir un lien de connexion</button><button class="btn lien" type="button" id="btnMdpOublie">Mot de passe oublié</button></p>
       <p class="statut" id="authStatut" role="status" aria-live="polite"></p>
     </form>
-    <p class="essaiLien">Pas encore de compte ? <a href="../essai.html"><b>Essai gratuit 14 jours</b></a>, sans carte bancaire.</p>
+    <p class="essaiLien">Pas encore de compte ? Les accès sont remis par ChantierLive ou par le promoteur de votre programme. <a href="../essai.html"><b>Demander un accès</b></a>.</p>
     <p class="mini">Espace réservé aux clients ChantierLive. <a href="../">Site public</a> · <a href="../legal/confidentialite.html">Confidentialité</a></p>
   </div>
 </div>
 <div id="modal" class="modal" hidden><div class="modalCarte" id="modalCarte"></div></div>
 <input type="file" id="fileCam" accept="image/*" capture="environment" hidden>
 <input type="file" id="fileGal" accept="image/*" hidden>
+<input type="file" id="fileDoc" hidden>
 <input type="file" id="fileLogo" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -58,5 +59,7 @@
 <script src="abonnement.js"></script>
 <script src="licence.js"></script>
 <script src="essai.js"></script>
+<script src="comptes.js"></script>
+<script src="documents.js"></script>
 </body>
 </html>

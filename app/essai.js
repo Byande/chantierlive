@@ -10,7 +10,7 @@ function bandeauEssai(vue) {
   const j = S.essai.jours, admin = PEUT.admin.includes(S.role) || S.adminPlateforme;
   const niveau = j <= 3 ? 'crit' : j <= 7 ? 'vig' : 'info';
   const lib = j < 0 ? 'Essai terminé' : j === 0 ? 'Dernier jour d’essai' : 'Essai gratuit · ' + j + ' jour' + (j > 1 ? 's' : '') + ' restant' + (j > 1 ? 's' : '');
-  return '<div class="alerte ' + niveau + ' bandeauEssai"><i></i><div><b>' + lib + '</b><small>Jusqu’au ' + dFrC(S.essai.echeance) + '. ' + (admin ? '<a href="#abonnement">Choisir une formule</a> · ' : '') + '<a href="#bienvenue">Guide de démarrage</a> · <a href="#" onclick="visite(S.vue);return false">Visite guidée</a></small></div></div>';
+  return '<div class="alerte ' + niveau + ' bandeauEssai"><i></i><div><b>' + lib + '</b><small>Jusqu’au ' + dFrC(S.essai.echeance) + '. ' + (admin ? '<a href="#abonnement">Votre contrat</a> · ' : '') + '<a href="#bienvenue">Guide de démarrage</a> · <a href="#" onclick="visite(S.vue);return false">Visite guidée</a></small></div></div>';
 }
 
 /* ---- page Démarrer ---- */
@@ -18,18 +18,18 @@ RENDU.bienvenue = () => {
   const admin = PEUT.admin.includes(S.role) || S.adminPlateforme, nbMembres = (S.cache.nbMembres ?? '—');
   const url = location.origin + location.pathname.replace(/index\.html$/, '') + (MARQUE.slug !== 'chantierlive' ? '?marque=' + MARQUE.slug : '');
   const etape = (n, ok, titre, texte, actions) => '<div class="carte etape' + (ok ? ' faite' : '') + '"><div class="num">' + (ok ? '✓' : n) + '</div><div><h3>' + titre + '</h3><p class="muted">' + texte + '</p>' + (actions ? '<p class="actions">' + actions + '</p>' : '') + '</div></div>';
-  return entete('Bienvenue' + (S.user.user_metadata?.nom ? ', ' + esc(S.user.user_metadata.nom.split(' ')[0]) : '') + '.', (S.essai ? 'Votre essai gratuit de <b>' + esc(S.org.nom) + '</b> court jusqu’au ' + dFrC(S.essai.echeance) + '. ' : '') + 'Quatre étapes pour voir votre chantier en direct.') +
+  return entete('Bienvenue' + (S.user.user_metadata?.nom ? ', ' + esc(S.user.user_metadata.nom.split(' ')[0]) : '') + '.', (S.essai ? 'Votre essai de <b>' + esc(S.org.nom) + '</b> court jusqu’au ' + dFrC(S.essai.echeance) + '. ' : 'Votre espace <b>' + esc(S.org.nom) + '</b> est ouvert. ') + 'Quatre étapes pour voir votre chantier en direct.') +
     '<div class="etapes">' +
     etape(1, !!S.prog, 'Créer votre chantier', S.prog ? 'Programme <b>' + esc(S.prog.nom) + '</b> en place. Vous pouvez compléter les phases, quartiers et équipes dans « Site et quartiers » et « Ressources humaines ».' : 'Un formulaire de trois minutes : nom, maître d’ouvrage, surface, logements, nombre de semaines, position du site pour le contrôle « sur site ». Ou importez le modèle Excel déjà rempli.',
       admin ? (S.prog ? '<a class="btn petit" href="#site">Site et quartiers</a><a class="btn petit" href="#import">Importer un classeur</a>' : '<button class="btn primaire petit" onclick="formulaire(\'programme\')">Créer le chantier</button><a class="btn petit" href="#import">Importer depuis Excel</a>') : 'Votre direction crée le chantier ; vous y accéderez automatiquement.') +
-    etape(2, nbMembres > 1, 'Inviter votre équipe', 'Chef de chantier, chefs d’équipe, architecte, contrôle, lecture seule : chacun reçoit un e-mail et ne voit que ce que son rôle permet. ' + (S.limites?.utilisateurs_max ? 'Jusqu’à ' + S.limites.utilisateurs_max + ' utilisateurs pendant l’essai.' : ''),
-      admin ? '<a class="btn primaire petit" href="#equipe">Inviter</a>' : '') +
+    etape(2, nbMembres > 1, 'Créer les comptes de votre équipe', 'Chef de chantier, chefs d’équipe, architecte, contrôle, lecture seule : vous créez chaque compte avec son rôle. Un mot de passe provisoire s’affiche une seule fois, vous le transmettez (WhatsApp, SMS, formation) ; la personne le change à sa première connexion et ne voit que ce que son rôle permet. ' + (S.limites?.utilisateurs_max ? 'Votre contrat prévoit jusqu’à ' + S.limites.utilisateurs_max + ' comptes.' : ''),
+      admin ? '<a class="btn primaire petit" href="#equipe">Créer les comptes</a>' : '') +
     etape(3, false, 'Installer sur les téléphones', 'Ouvrez l’adresse ci-dessous dans le navigateur du téléphone (Chrome ou Safari), puis « Ajouter à l’écran d’accueil ». Pointage et photos fonctionnent sans réseau et se synchronisent ensuite.',
       '<code class="cle" id="urlApp">' + esc(url) + '</code><button class="btn petit" onclick="navigator.clipboard.writeText($(\'#urlApp\').textContent).then(()=>toast(\'<b>Adresse copiée</b>\'))">Copier</button>' + (navigator.share ? '<button class="btn petit" onclick="navigator.share({title:MARQUE.nom,url:$(\'#urlApp\').textContent})">Partager</button>' : '')) +
     etape(4, !!localStorage.getItem('cl_visite_cockpit'), 'Faire le tour', 'Deux minutes par écran : la visite guidée montre où cliquer, du cockpit aux alertes. Vous pouvez la relancer à tout moment avec le bouton « ? » en haut à droite.',
       '<button class="btn primaire petit" onclick="visite(\'cockpit\', true)">Démarrer la visite</button><a class="btn petit" href="../docs/index.html" target="_blank" rel="noopener">Documentation</a><a class="btn petit" href="https://demo.chantierlive.com/" target="_blank" rel="noopener">Bac à sable public</a>') +
-    '</div>' +
-    (admin && S.essai ? '<div class="carte" style="margin-top:1rem"><h3>Après l’essai</h3><p class="muted">À l’échéance, l’espace passe en lecture seule : rien n’est effacé. Choisissez une formule quand vous le souhaitez, par mobile money ou virement ; l’activation suit sous 24 h ouvrées. <a href="#abonnement">Voir les formules</a>.</p></div>' : '');
+    '</div>' + (S.prog && admin ? '<div class="carte" style="margin-top:1rem"><h3>Et ensuite</h3><p class="muted">Déposez vos <a href="#documents">plans, maquettes et permis</a>, complétez l’<a href="#rh">effectif et les équipes</a> (les ouvriers émargent sur le téléphone de leur chef d’équipe, sans compte), renseignez <a href="#achats">fournisseurs et commandes</a> et le <a href="#finances">budget</a>. Le cockpit se met à jour à chaque saisie.</p></div>' : '') +
+    (admin && S.essai ? '<div class="carte" style="margin-top:1rem"><h3>Après l’essai</h3><p class="muted">À l’échéance, l’espace passe en lecture seule : rien n’est effacé. Pour continuer, contactez ChantierLive : un devis, un paiement par virement ou mobile money, et votre espace est prolongé. <a href="#abonnement">Votre contrat</a>.</p></div>' : '');
 };
 MONTE.bienvenue = async () => { if (S.cache.nbMembres == null) { const { count } = await sb.from('membres').select('user_id', { count: 'exact', head: true }).eq('org_id', S.org.id).eq('actif', true); S.cache.nbMembres = count ?? 1; if (S.vue === 'bienvenue') go('bienvenue', true); } };
 
@@ -46,12 +46,13 @@ const VISITES = {
     ['#btnValider', 'Valider', 'Sans réseau, le pointage est mis en file d’attente et transmis dès que la connexion revient.']],
   chantier: [['#btnCam', 'Photo terrain', 'Prise depuis l’appareil, horodatée, géolocalisée, rattachée au chantier. Visible immédiatement par la direction.'],
     ['#photos', 'Fil des photos', 'Les photos de la semaine, par auteur et par zone. Cliquez pour agrandir ou lire la légende.']],
-  equipe: [['#membres', 'Les comptes', 'Chaque personne a un rôle. La base de données applique les droits : l’interface ne fait que les refléter.'],
-    ['#invits', 'Invitations', 'Invitez par e-mail ; la personne crée son mot de passe et rejoint l’organisation avec le rôle choisi.']],
+  equipe: [['#membres', 'Les comptes', 'Chaque personne a un rôle. La base de données applique les droits : l’interface ne fait que les refléter. « Mot de passe » génère un nouveau provisoire ; « Désactiver » coupe l’accès sans rien effacer.'],
+    ['#nbComptes', 'Créer un compte', 'Nom, e-mail, téléphone, rôle : un mot de passe provisoire s’affiche une seule fois, à transmettre par WhatsApp ou SMS. La personne le change à sa première connexion.']],
+  documents: [['#docListe', 'Plans et documents', 'Plans, maquettes et images 3D, permis, contrats, rapports : datés, signés de leur auteur, consultables par toute l’équipe, même sur le terrain.']],
   import: [['#xlsx', 'Le classeur', 'Téléchargez le modèle, remplissez une feuille par table, importez. Les feuilles vides sont ignorées.'],
     ['#btnImporter', 'Importer', 'Le compte rendu liste ce qui a été créé et les lignes rejetées, avec la raison.']],
   alertes: [['.carte', 'Alertes et notifications', 'Les alertes sont aussi envoyées par e-mail et WhatsApp aux destinataires configurés dans Paramètres.']],
-  abonnement: [['#aboZone', 'Votre formule', 'Essai, formule mensuelle ou annuelle, factures et reçus imprimables. Le paiement direct est activé sous 24 h ouvrées.']],
+  abonnement: [['#aboZone', 'Votre contrat', 'Échéance, limites, factures et reçus imprimables. Les prolongations et extensions se font sur devis avec votre conseiller ChantierLive.']],
   parametres: [['.carte', 'Organisation et chantier', 'Nom, pays, devise, périmètre du site, destinataires des alertes, et votre mot de passe.']],
 };
 let visiteEtat = null;

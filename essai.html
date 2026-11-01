@@ -3,62 +3,64 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Essai gratuit ChantierLive · 14 jours, sans carte bancaire</title>
-<meta name="description" content="Créez votre espace ChantierLive en deux minutes : un chantier, quinze utilisateurs, tous les modules, pendant quatorze jours. Sans carte bancaire, sans engagement.">
+<title>Demander un accès ChantierLive · ouverture de votre espace sur devis</title>
+<meta name="description" content="Décrivez votre programme : nous vous présentons l'outil, vous recevez un devis, et dès paiement votre espace ChantierLive est ouvert avec votre compte promoteur et une formation de prise en main.">
 <link rel="canonical" href="https://chantierlive.com/essai.html">
 <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Essai gratuit ChantierLive · 14 jours"><meta property="og:description" content="Créez votre espace en deux minutes : un chantier, quinze utilisateurs, tous les modules. Sans carte bancaire."><meta property="og:image" content="https://chantierlive.com/assets/img/app-cockpit.jpg">
+<meta property="og:title" content="Demander un accès ChantierLive"><meta property="og:description" content="Démonstration, devis, paiement, ouverture de votre espace et formation : votre chantier en direct en moins d'une semaine."><meta property="og:image" content="https://chantierlive.com/assets/img/app-cockpit.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400..600,0..100&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
 <style>
-.essai-ok{display:none;text-align:center;padding:1rem .4rem}.essai-ok.on{display:block}.essai-ok .pastille{width:64px;height:64px;border-radius:50%;background:var(--signal);color:#fff;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem}.essai-ok .pastille svg{width:30px;height:30px}
-.essai-ok h2{font-family:var(--serif);font-weight:500;font-size:1.7rem;letter-spacing:-.01em}.essai-ok p{color:var(--encre-70);margin-top:.6rem}
-.inclus{display:grid;gap:.7rem;margin-top:1rem}.inclus>div{display:flex;gap:.8rem;align-items:flex-start;padding:.9rem 1rem;border-radius:.9rem;background:var(--papier,#fff);box-shadow:inset 0 0 0 1px rgba(11,29,51,.08)}.inclus i{flex:none;width:28px;height:28px;border-radius:50%;background:var(--encre);color:var(--craie);display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;font-style:normal}.inclus b{display:block;font-weight:700}.inclus small{color:var(--encre-70);font-size:.9rem}
+.acces-ok{display:none;text-align:center;padding:1rem .4rem}.acces-ok.on{display:block}.acces-ok .pastille{width:64px;height:64px;border-radius:50%;background:var(--signal);color:#fff;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem}.acces-ok .pastille svg{width:30px;height:30px}
+.acces-ok h2{font-family:var(--serif);font-weight:500;font-size:1.7rem;letter-spacing:-.01em}.acces-ok p{color:var(--encre-70);margin-top:.6rem}
+.inclus{display:grid;gap:.7rem;margin-top:1rem}.inclus>div{display:flex;gap:.8rem;align-items:flex-start;padding:.9rem 1rem;border-radius:.9rem;background:var(--papier,#fff);box-shadow:inset 0 0 0 1px rgba(11,29,51,.08)}.inclus i{flex:none;width:28px;height:28px;border-radius:50%;background:var(--encre);color:var(--craie);display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;font-style:normal}.inclus b{display:block;font-size:.98rem}.inclus small{color:var(--encre-70);font-size:.88rem;line-height:1.45}
 .form .aide{font-size:.82rem;color:var(--encre-70);margin-top:.3rem}
 </style>
 </head>
 <body>
-<header class="page-head"><div class="wrap"><span class="eyebrow live rv"><i></i>Essai gratuit · quatorze jours</span><h1 class="rv d1">Votre espace ChantierLive <em>en deux minutes</em>.</h1><p class="lead rv d2">Un chantier, quinze utilisateurs, tous les modules : pointage signé, photos, livraisons, finances, alertes. Sans carte bancaire, sans engagement. À la fin de l'essai, vous choisissez une formule ou vous arrêtez là.</p></div></header>
+<header class="page-head"><div class="wrap"><span class="eyebrow live rv"><i></i>Demander un accès</span><h1 class="rv d1">Votre espace ChantierLive, <em>ouvert pour vous</em>.</h1><p class="lead rv d2">Pas d'inscription en ligne ni de carte bancaire : nous ouvrons chaque espace nous-mêmes, après une démonstration et un devis adapté à votre programme. Vous recevez votre compte promoteur, une formation de prise en main, et vous créez vous-même les comptes de vos équipes.</p></div></header>
 
 <section style="padding-top:1rem"><div class="wrap split" style="align-items:start">
   <div class="rv">
     <div class="bezel"><div class="core" style="padding:clamp(1.4rem,3vw,2.4rem)">
-      <form data-essai novalidate class="form" id="formEssai">
+      <form data-acces novalidate class="form" id="formAcces">
         <div class="field"><label for="nom">Nom et prénom</label><input id="nom" name="nom" required autocomplete="name" placeholder="Ex. : Amadou Diallo"></div>
-        <div class="field"><label for="organisation">Société ou programme</label><input id="organisation" name="organisation" required autocomplete="organization" placeholder="Ex. : Alliou Immobilier"><p class="aide">Ce sera le nom de votre espace. Vous pourrez le modifier.</p></div>
-        <div class="field"><label for="email">E-mail professionnel</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="vous@exemple.com"></div>
+        <div class="field"><label for="organisation">Société ou programme</label><input id="organisation" name="organisation" required autocomplete="organization" placeholder="Ex. : Alliou Immobilier"><p class="aide">Ce sera le nom de votre espace.</p></div>
+        <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="vous@exemple.com"></div>
         <div class="field"><label for="telephone">Téléphone ou WhatsApp</label><input id="telephone" name="telephone" type="tel" autocomplete="tel" placeholder="+224 6xx xx xx xx"></div>
-        <div class="field"><label for="pays">Pays du chantier</label><select id="pays" name="pays"><option>Guinée</option><option>Cameroun</option><option>Côte d'Ivoire</option><option>Sénégal</option><option>Gabon</option><option>Congo</option><option>Mali</option><option>Bénin</option><option>Togo</option><option>Burkina Faso</option><option>Niger</option><option>Tchad</option><option>France</option><option>Autre</option></select><p class="aide">Fixe la devise par défaut (GNF, FCFA, euro) ; modifiable ensuite.</p></div>
-        <div class="field"><label for="mdp">Mot de passe</label><input id="mdp" name="mdp" type="password" required minlength="10" autocomplete="new-password" placeholder="Au moins 10 caractères"><p class="aide">Dix caractères au minimum. Vous pourrez aussi vous connecter par lien e-mail.</p></div>
+        <div class="field"><label for="pays">Pays du chantier</label><select id="pays" name="pays"><option>Guinée</option><option>Cameroun</option><option>Côte d'Ivoire</option><option>Sénégal</option><option>Gabon</option><option>Congo</option><option>Mali</option><option>Bénin</option><option>Togo</option><option>Burkina Faso</option><option>Niger</option><option>Tchad</option><option>France</option><option>Maroc</option><option>Autre</option></select></div>
+        <div class="field"><label for="role">Votre rôle</label><select id="role" name="role"><option>Promoteur / maître d'ouvrage</option><option>Direction de programme</option><option>Chef de chantier</option><option>Architecte / bureau d'études</option><option>Entreprise de BTP</option><option>Administration</option><option>Autre</option></select></div>
+        <div class="field full"><label for="taille">Taille du ou des chantiers</label><select id="taille" name="taille"><option>Moins de 50 logements ou 1 bâtiment</option><option>50 à 500 logements</option><option>500 à 2 000 logements</option><option>Plus de 2 000 logements ou plusieurs programmes</option></select></div>
+        <div class="field full"><label for="message">Votre programme en quelques mots</label><textarea id="message" name="message" placeholder="Ex. : lotissement de 165 ha en quatre tranches, trois chefs d'équipe, contrôle des présences et des livraisons, alertes au promoteur…"></textarea></div>
         <input type="text" name="site" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
-        <label class="consent full"><input type="checkbox" name="consent" required> J'accepte les <a href="legal/cgu.html" style="text-decoration:underline">conditions d'utilisation</a> et la <a href="legal/confidentialite.html" style="text-decoration:underline">politique de confidentialité</a>. Mes données restent dans l'Union européenne.</label>
-        <div class="full actions"><button class="btn btn-signal" type="submit">Ouvrir mon espace d'essai<span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></button><span class="status" role="status" aria-live="polite"></span></div>
+        <label class="consent full"><input type="checkbox" name="consent" required> J'accepte que ChantierLive utilise ces informations pour me recontacter au sujet de cette demande. Voir la <a href="legal/confidentialite.html" style="text-decoration:underline">politique de confidentialité</a>. Mes données restent dans l'Union européenne.</label>
+        <div class="full actions"><button class="btn btn-signal" type="submit">Envoyer ma demande<span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></button><span class="status" role="status" aria-live="polite"></span></div>
         <p class="note full" style="margin-top:.2rem">Déjà un compte ? <a href="app/" style="color:var(--signal)">Se connecter</a>.</p>
       </form>
-      <div class="essai-ok" id="essaiOk" role="status" aria-live="polite">
-        <div class="pastille"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m4 7 8 6 8-6"/></svg></div>
-        <h2>Vérifiez votre boîte e-mail</h2>
-        <p>Nous venons d'envoyer un lien de confirmation à <b id="okEmail"></b>. Ouvrez-le, de préférence depuis le téléphone ou l'ordinateur que vous utiliserez : votre espace <b id="okOrg"></b> s'ouvre aussitôt.</p>
-        <p class="note" style="margin-top:1rem">Rien reçu après quelques minutes ? Regardez dans les courriers indésirables, ou <a href="app/" style="color:var(--signal)">demandez un lien de connexion</a> depuis la page de connexion.</p>
+      <div class="acces-ok" id="accesOk" role="status" aria-live="polite">
+        <div class="pastille"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h2>Demande reçue</h2>
+        <p>Nous vous recontactons sous 24 h ouvrées à <b id="okEmail"></b> ou par téléphone pour fixer la démonstration et préparer votre devis. Votre espace sera ouvert dès réception du paiement, avec votre compte promoteur et la formation de prise en main.</p>
+        <p class="note" style="margin-top:1rem">Pressé ? <a href="https://demo.chantierlive.com/" target="_blank" rel="noopener" style="color:var(--signal)">Ouvrez le bac à sable public</a> ou écrivez-nous sur WhatsApp au +237 6 50 15 74 61.</p>
       </div>
     </div></div>
   </div>
   <div>
-    <span class="eyebrow rv"><i></i>Ce que comprend l'essai</span>
+    <span class="eyebrow rv"><i></i>Comment ça se passe</span>
     <div class="inclus rv d1">
-      <div><i>14</i><div><b>Quatorze jours, tous les modules</b><small>Cockpit, pointage signé et géolocalisé, photos, caméras, livraisons et stocks, finances, risques, RH et paie, alertes e-mail et WhatsApp.</small></div></div>
-      <div><i>1</i><div><b>Un chantier, quinze utilisateurs</b><small>Les limites de la formule Essentiel. Votre équipe émarge depuis son téléphone dès le premier jour, même sans réseau.</small></div></div>
-      <div><i>0</i><div><b>Aucune carte bancaire</b><small>À la fin de l'essai, l'espace passe en lecture seule. Vos données restent consultables trente jours, le temps de choisir une formule.</small></div></div>
+      <div><i>1</i><div><b>Démonstration sur votre programme</b><small>Quarante-cinq minutes, en visio ou sur site, avec vos chiffres : phases, budget, équipes. Vous émargez vous-même, prenez une photo, simulez un retard.</small></div></div>
+      <div><i>2</i><div><b>Devis adapté</b><small>Nombre de chantiers, de comptes utilisateurs, formation sur site, marque blanche ou instance dédiée : un prix clair, pour la durée que vous choisissez.</small></div></div>
+      <div><i>3</i><div><b>Paiement par virement ou mobile money</b><small>Sur facture, sans carte bancaire ni prélèvement automatique. Facturé par LevENT-IT (France) ou ETS 2BY Consulting (Cameroun) selon votre pays.</small></div></div>
+      <div><i>4</i><div><b>Ouverture de l'espace et formation</b><small>Nous créons votre espace et vous remettons votre compte promoteur. Une séance de prise en main, puis vous créez vous-même les comptes de vos équipes, importez vos données, déposez vos plans et maquettes.</small></div></div>
     </div>
-    <span class="eyebrow rv d2" style="margin-top:1.8rem"><i></i>Ensuite</span>
+    <span class="eyebrow rv d2" style="margin-top:1.8rem"><i></i>Ensuite, vous êtes chez vous</span>
     <div class="steps rv d2" style="grid-template-columns:1fr;margin-top:1rem">
-      <div class="s"><b>1 · Créez votre chantier</b><p>Un formulaire de trois minutes, ou le modèle Excel à remplir : phases, quartiers, équipes, budget, fournisseurs.</p></div>
-      <div class="s"><b>2 · Invitez votre équipe</b><p>Chef de chantier, chefs d'équipe, architecte, contrôle : chacun reçoit un lien et voit uniquement ce que son rôle permet.</p></div>
-      <div class="s"><b>3 · Installez l'application</b><p>Depuis le navigateur du téléphone : « Ajouter à l'écran d'accueil ». Pointage et photos fonctionnent hors ligne.</p></div>
+      <div class="s"><b>Vos équipes, vos rôles</b><p>Chef de chantier, chefs d'équipe, architecte, contrôle, lecture seule : vous créez chaque compte et remettez le mot de passe provisoire. Les ouvriers émargent sur le téléphone de leur chef d'équipe, sans compte.</p></div>
+      <div class="s"><b>Vos ressources</b><p>Effectif, équipes, congés, paie ; fournisseurs, commandes, stocks ; budget et ventes. Par formulaire ou par import du modèle Excel.</p></div>
+      <div class="s"><b>Vos plans et maquettes</b><p>Plans, images 3D, permis, contrats, rapports : déposés une fois, consultables par toute l'équipe, même sur le terrain.</p></div>
     </div>
-    <div class="bezel rv d3" style="margin-top:1.4rem"><div class="core" style="padding:1.4rem 1.6rem"><b style="font-family:var(--serif);font-size:1.2rem;font-weight:500">Vous préférez qu'on vous guide ?</b><p style="color:var(--encre-70);margin-top:.4rem;font-size:.95rem">Quarante-cinq minutes sur votre programme réel, en visio ou sur site. Nous préparons l'espace avec vos chiffres.</p><div class="actions" style="margin-top:1rem"><a class="btn btn-ghost btn-sm" href="demo.html">Demander une démonstration<span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13 13 3M6 3h7v7"/></svg></span></a><a class="btn btn-ghost btn-sm" href="https://demo.chantierlive.com/" target="_blank" rel="noopener">Ouvrir le bac à sable</a></div></div></div>
-    <p class="note rv d3">Une question ? <a href="mailto:contact@chantierlive.com" style="color:var(--signal)">contact@chantierlive.com</a> · WhatsApp +237 6 50 15 74 61</p>
+    <p class="note rv d3" style="margin-top:1.4rem">Une question ? <a href="mailto:contact@chantierlive.com" style="color:var(--signal)">contact@chantierlive.com</a> · WhatsApp +237 6 50 15 74 61 · <a href="tarifs.html" style="color:var(--signal)">Ce que comprend l'offre</a></p>
   </div>
 </div></section>
 

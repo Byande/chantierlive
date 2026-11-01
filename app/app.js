@@ -1,5 +1,5 @@
 /* ============================================================
-   ChantierLive — application client · v0.7 (étapes 3 à 7 : socle multi-clients, saisie, paiement, licences et marque blanche, essai libre-service)
+   ChantierLive — application client · v0.8 (étapes 3 à 8 : socle multi-clients, saisie, paiement direct, licences et marque blanche, mode géré : comptes remis en main propre, contrats sur devis, plans et documents)
    Authentification, organisations, rôles, cockpit sur données réelles,
    pointage signé et géolocalisé, photos, temps réel.
    ============================================================ */
@@ -66,7 +66,7 @@ async function demarrer() {
   if (error) { toast('<b>Erreur</b> ' + esc(error.message)); return; }
   S.orgs = (membres || []).map(m => ({ ...m.orgs, role: m.role }));
   const { data: pa } = await sb.from('platform_admins').select('email').limit(1); S.adminPlateforme = !!(pa && pa.length);
-  if (!S.orgs.length) { $('#main').innerHTML = '<div class="vide"><h2>Aucune organisation</h2><p style="margin-top:.5rem">Votre compte n’est rattaché à aucun client ChantierLive. Demandez une invitation à votre administrateur ou écrivez à contact@chantierlive.com.</p><p style="margin-top:1rem"><button class="btn" onclick="deconnexion()">Se déconnecter</button></p></div>'; $('#nav').innerHTML = ''; setConn('off', 'Sans organisation'); return; }
+  if (!S.orgs.length) { $('#main').innerHTML = '<div class="vide"><h2>Aucun espace rattaché</h2><p style="margin-top:.5rem">Votre compte n’est encore rattaché à aucun espace client. Les accès sont ouverts par ChantierLive après validation du devis, ou par le promoteur de votre programme depuis « Comptes et accès ». Écrivez à contact@chantierlive.com ou WhatsApp +237 6 50 15 74 61.</p><p style="margin-top:1rem"><button class="btn" onclick="deconnexion()">Se déconnecter</button></p></div>'; $('#nav').innerHTML = ''; setConn('off', 'Sans organisation'); return; }
   const prefere = localStorage.getItem('cl_org'); S.org = S.orgs.find(o => o.id === prefere) || S.orgs[0]; S.role = S.org.role;
   await chargerMarqueOrg();
   await chargerProgrammes();
@@ -136,18 +136,18 @@ window.addEventListener('offline', () => setConn('off', 'Hors ligne · saisies c
 
 /* ---------- navigation ---------- */
 const VUES = [
-  ['Piloter', [['cockpit', 'Cockpit'], ['site', 'Site et quartiers'], ['finances', 'Finances'], ['risques', 'Risques et qualité']]],
+  ['Piloter', [['cockpit', 'Cockpit'], ['site', 'Site et quartiers'], ['finances', 'Finances'], ['risques', 'Risques et qualité'], ['documents', 'Plans et documents']]],
   ['Terrain', [['chantier', 'Chantier'], ['pointage', 'Pointage et émargement']]],
   ['Ressources', [['rh', 'Ressources humaines'], ['achats', 'Achats et fournisseurs']]],
   ['Après livraison', [['exploitation', 'Exploitation et maintenance']]],
-  ['Dispositif', [['bienvenue', 'Démarrer'], ['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['abonnement', 'Abonnement'], ['marque', 'Marque et licence'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
+  ['Dispositif', [['bienvenue', 'Démarrer'], ['alertes', 'Alertes'], ['equipe', 'Comptes et accès'], ['abonnement', 'Contrat et factures'], ['marque', 'Marque et licence'], ['import', 'Importer'], ['parametres', 'Paramètres']]],
   ['Plateforme', [['backoffice', 'Back-office']]],
 ];
 function renderNav() {
   const nAl = alertes().filter(a => a.n === 'crit').length, nNotif = (S.data.notifications || []).filter(x => !(x.lu_par || []).includes(S.user.id)).length;
-  $('#nav').innerHTML = VUES.filter(([g]) => g !== 'Plateforme' || S.adminPlateforme).map(([g, vs]) => '<h5>' + g + '</h5>' + vs.filter(([id]) => !(['abonnement', 'marque'].includes(id) && !(PEUT.admin.includes(S.role) || S.adminPlateforme)) && !(id === 'bienvenue' && !(S.essai || !S.prog))).map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('') + (MARQUE.slug !== 'chantierlive' && !MARQUE.masquer ? '<p class="propulse side">Propulsé par <a href="https://chantierlive.com" target="_blank" rel="noopener">Chantier<b>Live</b></a></p>' : '');
+  $('#nav').innerHTML = VUES.filter(([g]) => g !== 'Plateforme' || S.adminPlateforme).map(([g, vs]) => '<h5>' + g + '</h5>' + vs.filter(([id]) => !(['abonnement', 'marque'].includes(id) && !(PEUT.admin.includes(S.role) || S.adminPlateforme))).map(([id, lib]) => '<a href="#' + id + '" class="' + (S.vue === id ? 'actif' : '') + '">' + lib + (id === 'cockpit' && nAl ? '<span class="badge">' + nAl + '</span>' : '') + (id === 'alertes' && nNotif ? '<span class="badge">' + nNotif + '</span>' : '') + '</a>').join('')).join('') + (MARQUE.slug !== 'chantierlive' && !MARQUE.masquer ? '<p class="propulse side">Propulsé par <a href="https://chantierlive.com" target="_blank" rel="noopener">Chantier<b>Live</b></a></p>' : '');
 }
-function go(id, silencieux) { if (!RENDU[id]) id = 'cockpit'; if (id === 'cockpit' && !S.prog && RENDU.bienvenue) id = 'bienvenue'; if (!silencieux) fermerModal(); if (window.finVisite) finVisite(); S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = (window.bandeauEssai ? bandeauEssai(id) : '') + RENDU[id](); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
+function go(id, silencieux) { if (!RENDU[id] || (id === 'backoffice' && !S.adminPlateforme)) id = 'cockpit'; if (id === 'cockpit' && !S.prog && RENDU.bienvenue) id = 'bienvenue'; if (!silencieux) fermerModal(); if (window.finVisite) finVisite(); S.vue = id; localStorage.setItem('cl_vue', id); if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); $('#main').innerHTML = (window.bandeauEssai ? bandeauEssai(id) : '') + RENDU[id](); if (MONTE[id]) MONTE[id](); renderNav(); if (!silencieux) window.scrollTo({ top: 0 }); }
 window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (RENDU[h] && h !== S.vue) go(h); });
 const RENDU = {}, MONTE = {};
 

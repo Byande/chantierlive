@@ -4,17 +4,17 @@
   const PAGE = (S && S.dataset.page) || '';
   const MARK = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 26V16a6 6 0 0 1 6-6h10" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M54 38v10a6 6 0 0 1-6 6H38" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="32" r="7.5" fill="#E4572E"/><circle cx="32" cy="32" r="13.5" fill="none" stroke="#E4572E" stroke-width="2" opacity=".45"/></svg>';
   const T = {
-    fr: { home: 'index.html', links: [['produit', 'produit.html', 'Produit'], ['tarifs', 'tarifs.html', 'Tarifs'], ['demo', 'demo.html', 'Démo'], ['apropos', 'a-propos.html', 'À propos'], ['connexion', 'app/', 'Connexion']],
-      lang: ['EN', 'en/index.html'], cta: 'Essai gratuit', ctaHref: 'essai.html',
-      cols: [['Produit', [['Modules', 'produit.html'], ['Tarifs', 'tarifs.html'], ['Essai gratuit 14 jours', 'essai.html'], ['Licence et marque blanche', 'licence.html'], ['Bac à sable', 'https://demo.chantierlive.com/'], ['Documentation', 'docs/index.html']]],
+    fr: { home: 'index.html', links: [['produit', 'produit.html', 'Produit'], ['tarifs', 'tarifs.html', 'Offre'], ['demo', 'demo.html', 'Démo'], ['apropos', 'a-propos.html', 'À propos'], ['connexion', 'app/', 'Connexion']],
+      lang: ['EN', 'en/index.html'], cta: 'Demander une démo', ctaHref: 'demo.html',
+      cols: [['Produit', [['Modules', 'produit.html'], ['Offre et devis', 'tarifs.html'], ['Demander un accès', 'essai.html'], ['Licence et marque blanche', 'licence.html'], ['Bac à sable', 'https://demo.chantierlive.com/'], ['Documentation', 'docs/index.html']]],
         ['Entreprise', [['À propos', 'a-propos.html'], ['Demander une démo', 'demo.html'], ['Se connecter', 'app/'], ['Contact', 'mailto:contact@chantierlive.com'], ['Charte de marque', 'marque/index.html']]],
         ['Juridique', [['Mentions légales', 'legal/mentions-legales.html'], ['Conditions d’utilisation', 'legal/cgu.html'], ['Conditions de vente', 'legal/cgv.html'], ['Confidentialité', 'legal/confidentialite.html']]]],
       about: 'Le suivi et le contrôle des chantiers en direct, conçu pour les promoteurs et maîtres d’ouvrage d’Afrique et d’Europe.',
       legal: '© 2026 ChantierLive est une marque de Paul Mirabeau Byande, exploitée sous licence par LevENT-IT (France) et ETS 2BY Consulting (Cameroun).',
       menuSmall: 'contact@chantierlive.com' },
-    en: { home: 'index.html', links: [['produit', 'index.html#product', 'Product'], ['tarifs', 'index.html#pricing', 'Pricing'], ['demo', 'index.html#demo', 'Demo'], ['apropos', '../a-propos.html', 'About'], ['connexion', '../app/', 'Sign in']],
-      lang: ['FR', '../index.html'], cta: 'Free trial (FR)', ctaHref: '../essai.html',
-      cols: [['Product', [['Modules', 'index.html#product'], ['Pricing', 'index.html#pricing'], ['Free 14-day trial (FR)', '../essai.html'], ['Dedicated licence (FR)', '../licence.html'], ['Sandbox', 'https://demo.chantierlive.com/'], ['Documentation', '../docs/index.html']]],
+    en: { home: 'index.html', links: [['produit', 'index.html#product', 'Product'], ['tarifs', 'index.html#pricing', 'Offer'], ['demo', 'index.html#demo', 'Demo'], ['apropos', '../a-propos.html', 'About'], ['connexion', '../app/', 'Sign in']],
+      lang: ['FR', '../index.html'], cta: 'Request a demo', ctaHref: 'index.html#demo',
+      cols: [['Product', [['Modules', 'index.html#product'], ['Offer', 'index.html#pricing'], ['Request access (FR)', '../essai.html'], ['Dedicated licence (FR)', '../licence.html'], ['Sandbox', 'https://demo.chantierlive.com/'], ['Documentation', '../docs/index.html']]],
         ['Company', [['About (FR)', '../a-propos.html'], ['Request a demo', 'index.html#demo'], ['Contact', 'mailto:contact@chantierlive.com'], ['Brand guidelines (FR)', '../marque/index.html']]],
         ['Legal (FR)', [['Legal notice', '../legal/mentions-legales.html'], ['Terms of use', '../legal/cgu.html'], ['Terms of sale', '../legal/cgv.html'], ['Privacy', '../legal/confidentialite.html']]]],
       about: 'Real-time site monitoring and control, built for developers and project owners in Africa and Europe.',
@@ -50,62 +50,25 @@
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .08 });
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
-  /* ---- Formulaire de demande de démo ---- */
+  /* ---- Formulaires de demande (démonstration, accès) : insertion dans cl_demandes ---- */
   const SUPA = { url: 'https://vdzzvnuarmprkickeyus.supabase.co', key: 'sb_publishable_Mq8zAuTA--p4R7LoOix07A_B6jcRQWK' };
-  document.querySelectorAll('form[data-demo]').forEach(f => {
-    const st = f.querySelector('.status');
+  document.querySelectorAll('form[data-demo],form[data-acces]').forEach(f => {
+    const st = f.querySelector('.status'), acces = f.hasAttribute('data-acces');
     f.addEventListener('submit', async e => {
       e.preventDefault();
       if (f.querySelector('[name=site]') && f.querySelector('[name=site]').value) return;
       const d = Object.fromEntries(new FormData(f).entries()); delete d.site; delete d.consent;
-      d.langue = LANG; d.source = location.hostname || 'local';
+      if (!(d.nom || '').trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((d.email || '').trim())) { st.className = 'status err'; st.textContent = LANG === 'fr' ? 'Indiquez votre nom et une adresse e-mail valide.' : 'Please enter your name and a valid e-mail address.'; return; }
+      d.type = acces ? 'acces' : 'demo'; d.langue = LANG; d.source = location.hostname || 'local';
       const btn = f.querySelector('button[type=submit]'); btn.disabled = true; st.className = 'status'; st.textContent = LANG === 'fr' ? 'Envoi en cours…' : 'Sending…';
       try {
         const r = await fetch(SUPA.url + '/rest/v1/cl_demandes', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPA.key, Authorization: 'Bearer ' + SUPA.key, Prefer: 'return=minimal' }, body: JSON.stringify(d) });
         if (!r.ok) throw new Error(await r.text());
-        st.className = 'status ok'; st.textContent = LANG === 'fr' ? 'Merci. Nous vous recontactons sous 24 h ouvrées pour fixer la démonstration.' : 'Thank you. We will get back to you within one business day to schedule the demo.';
+        if (acces && document.getElementById('accesOk')) { document.getElementById('okEmail').textContent = d.email.trim(); f.hidden = true; document.getElementById('accesOk').classList.add('on'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        else { st.className = 'status ok'; st.textContent = LANG === 'fr' ? 'Merci. Nous vous recontactons sous 24 h ouvrées pour fixer la démonstration.' : 'Thank you. We will get back to you within one business day to schedule the demo.'; }
         f.reset();
       } catch (err) {
         st.className = 'status err'; st.innerHTML = LANG === 'fr' ? 'L’envoi a échoué. Écrivez-nous directement à <a href="mailto:contact@chantierlive.com">contact@chantierlive.com</a>.' : 'Sending failed. Please email us at <a href="mailto:contact@chantierlive.com">contact@chantierlive.com</a>.';
-      } finally { btn.disabled = false; }
-    });
-  });
-  /* ---- Formulaire d'essai gratuit (création de compte) ---- */
-  document.querySelectorAll('form[data-essai]').forEach(f => {
-    const st = f.querySelector('.status');
-    f.addEventListener('submit', async e => {
-      e.preventDefault();
-      if (f.querySelector('[name=site]').value) return;
-      const d = Object.fromEntries(new FormData(f).entries());
-      const champs = { nom: 'votre nom', organisation: 'le nom de votre société ou programme', email: 'votre adresse e-mail', mdp: 'un mot de passe' };
-      for (const k in champs) if (!(d[k] || '').trim()) { st.className = 'status err'; st.textContent = 'Indiquez ' + champs[k] + '.'; f.querySelector('[name=' + k + ']').focus(); return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())) { st.className = 'status err'; st.textContent = 'Cette adresse e-mail ne semble pas valide.'; return; }
-      if (d.mdp.length < 10) { st.className = 'status err'; st.textContent = 'Le mot de passe doit comporter au moins dix caractères.'; return; }
-      if (!d.consent) { st.className = 'status err'; st.textContent = 'Merci d’accepter les conditions d’utilisation.'; return; }
-      const btn = f.querySelector('button[type=submit]'); btn.disabled = true; st.className = 'status'; st.textContent = 'Création de votre espace…';
-      const appUrl = new URL('app/', location.href).href.replace(/\/index\.html$/, '/');
-      try {
-        const r = await fetch(SUPA.url + '/auth/v1/signup?redirect_to=' + encodeURIComponent(appUrl), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPA.key },
-          body: JSON.stringify({ email: d.email.trim().toLowerCase(), password: d.mdp, data: { nom: d.nom.trim(), organisation: d.organisation.trim(), pays: d.pays, telephone: (d.telephone || '').trim(), source: location.hostname || 'local' } }) });
-        const j = await r.json().catch(() => ({}));
-        if (!r.ok) {
-          const m = (j.msg || j.message || j.error_description || '').toLowerCase();
-          if (m.includes('already') || m.includes('registered')) throw new Error('Un compte existe déjà pour cette adresse. <a href="' + appUrl + '">Connectez-vous</a> ou demandez un lien de connexion.');
-          if (m.includes('rate') || r.status === 429) throw new Error('Trop de demandes en peu de temps. Réessayez dans quelques minutes.');
-          if (m.includes('password')) throw new Error('Mot de passe refusé : choisissez-en un plus long ou plus varié.');
-          if (m.includes('invalid') && m.includes('email')) throw new Error('Cette adresse e-mail est refusée : utilisez une adresse professionnelle ou personnelle réelle.');
-          throw new Error(j.msg || j.message || 'Création impossible pour le moment.');
-        }
-        if (j.access_token) { // confirmation d'e-mail désactivée : on ouvre directement l'application
-          location.href = appUrl + '#access_token=' + encodeURIComponent(j.access_token) + '&refresh_token=' + encodeURIComponent(j.refresh_token) + '&expires_in=' + (j.expires_in || 3600) + '&token_type=bearer&type=signup';
-          return;
-        }
-        const u = j.user || j;
-        if (Array.isArray(u.identities) && u.identities.length === 0) throw new Error('Un compte existe déjà pour cette adresse. <a href="' + appUrl + '">Connectez-vous</a> ou demandez un lien de connexion.');
-        document.getElementById('okEmail').textContent = d.email.trim(); document.getElementById('okOrg').textContent = d.organisation.trim();
-        f.hidden = true; document.getElementById('essaiOk').classList.add('on'); window.scrollTo({ top: 0, behavior: 'smooth' });
-      } catch (err) {
-        st.className = 'status err'; st.innerHTML = err.message + ' Besoin d’aide ? <a href="mailto:contact@chantierlive.com">contact@chantierlive.com</a>.';
       } finally { btn.disabled = false; }
     });
   });
