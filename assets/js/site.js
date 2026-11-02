@@ -38,6 +38,15 @@
   menu.addEventListener('click', e => { if (e.target.tagName === 'A') document.body.classList.remove('menu-open'); });
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
   onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+  /* Ouvert depuis l'écran d'accueil (sans barre de navigateur) : boutons retour et actualiser */
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    document.documentElement.classList.add('standalone');
+    const bar = document.createElement('div'); bar.className = 'pwa-bar';
+    bar.innerHTML = '<button type="button" aria-label="' + (LANG === 'fr' ? 'Retour' : 'Back') + '"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 6 10l6 6"/></svg></button><button type="button" aria-label="' + (LANG === 'fr' ? 'Actualiser' : 'Reload') + '"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a6 6 0 1 1-1.8-4.3"/><path d="M16 3v4h-4"/></svg></button>';
+    bar.children[0].addEventListener('click', () => { if (history.length > 1) history.back(); else location.href = h(T.home); });
+    bar.children[1].addEventListener('click', () => location.reload());
+    document.body.appendChild(bar);
+  }
 
   /* ---- Pied de page ---- */
   const foot = document.createElement('footer');
