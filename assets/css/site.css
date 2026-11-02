@@ -18,6 +18,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overscroll-behavior-y:auto}
 body{margin:0;background:var(--fond);color:var(--encre);font-family:var(--sans);font-size:17px;line-height:1.6;font-feature-settings:'ss01','cv11';overflow-x:hidden}
 img,svg{display:block;max-width:100%}
+img{height:auto}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--signal);color:#fff}
 h1,h2,h3,h4{font-family:var(--serif);font-weight:500;letter-spacing:-.025em;line-height:1.05;margin:0;font-variation-settings:'opsz' 144,'SOFT' 20}
